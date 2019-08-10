@@ -48,6 +48,17 @@ hacs:
   token: !secret hacs_token
 
 history:
+  exclude:
+    domains:
+    - automation
+    - calendar
+    - group
+    - script
+    - sun
+    - updater
+    - weather
+    - zone
+    - zwave
 
 http: !include http.yaml
 
@@ -122,6 +133,10 @@ weather:
 zone: !include zones.yaml
 
 zoneminder:
-  - host: docker:5001
+  - host: !secret zoneminder_url
+    ssl: true
+    verify_ssl: true
+    username: !secret zoneminder_username
+    password: !secret zoneminder_password
 
 zwave: !include zwave.yaml
