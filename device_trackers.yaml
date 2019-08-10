@@ -1,0 +1,3 @@
+- platform: smartstart_postmark
+  username: !secret smartstart_username
+  password: !secret smartstart_password

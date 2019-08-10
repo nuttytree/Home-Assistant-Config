@@ -1,0 +1,28 @@
+- id: washer_done
+  alias: Washer is Done Announcement
+  initial_state: 'off'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.washing_machine
+    to: 'off'
+  action:
+  - service: script.audio_notify
+    data:
+      mplayer: "all_inside"
+      message: "The washing machine is done running and ready to be unloaded!"
+
+
+- id: dryer_done
+  alias: Dryer is Done Announcement
+  initial_state: 'off'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.dryer
+    to: 'off'
+  action:
+  - service: script.audio_notify
+    data:
+      mplayer: "all_inside"
+      message: "The dryer is done running and ready to be unloaded!"
+
+

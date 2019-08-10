@@ -1,0 +1,46 @@
+script_start_melissas_car:
+  alias: Script - Start Melissa's Car
+  sequence:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.main_garage_door
+    - wait_template: "{{ is_state('cover.main_garage_door', 'open') }}"
+      timeout: '00:02:00'
+      continue_on_timeout: 'false'
+    - service: switch.turn_on
+      entity_id: switch.smartstart_90947
+    - delay: '00:00:05'
+    - service: lock.lock
+      entity_id: lock.smartstart_90947
+    
+script_start_chris_car:
+  alias: Script - Start Chris' Car
+  sequence:
+    - service: cover.open_cover
+      data:
+        entity_id: cover.main_garage_door
+    - wait_template: "{{ is_state('cover.main_garage_door', 'open') }}"
+      timeout: '00:02:00'
+      continue_on_timeout: 'false'
+    - service: switch.turn_on
+      entity_id: switch.smartstart_706837
+    - delay: '00:00:05'
+    - service: lock.lock
+      entity_id: lock.smartstart_706837
+    
+audio_notify:
+  alias: Alexa Audio Notification
+  sequence: 
+    - service: media_player.alexa_tts
+      data_template:       
+        entity_id: >
+          {% if (mplayer == "all") %}
+            media_player.family_room_echo,media_player.living_room_echo,media_player.basement_echo,media_player.bedroom_echo
+          {% elif (mplayer == "all_inside") %}
+            media_player.family_room_echo,media_player.living_room_echo,media_player.bedroom_echo
+          {% elif (mplayer == "main_floor") %}
+            media_player.family_room_echo,media_player.living_room_echo
+          {% else %}
+            media_player.{{ mplayer }}
+          {% endif %} 
+        message: "{{ message }}"

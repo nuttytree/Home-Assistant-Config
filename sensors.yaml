@@ -1,0 +1,83 @@
+- platform: time_date
+  display_options:
+  - 'time'
+
+- platform: zoneminder
+  include_archived: false
+
+- platform: template
+  sensors:
+    day_night:
+      friendly_name: "Day/Night"
+      value_template: "{% if is_state('input_boolean.day_night', 'on') %}Day{%else%}Night{%endif%}"
+      icon_template: "{% if is_state('input_boolean.day_night', 'on') %}mdi:weather-sunny{%else%}mdi:weather-night{%endif%}"
+      
+    maysons_battery:
+      friendly_name: "Mayson's Sensor Battery"
+      device_class: battery
+      value_template: "{{ state_attr('zwave.maysons_sensor', 'battery_level') }}"
+      
+    upstairs_bathroom_battery:
+      friendly_name: "Upstairs Bathroom Battery"
+      device_class: battery
+      value_template: "{{ state_attr('zwave.upstairs_bathroom_sensor', 'battery_level') }}"
+      
+    upstairs_bathroom_humidity_median:
+      friendly_name: "Upstairs Bathroom Humidity Median"
+      value_template: "{{ states.sensor.upstairs_bathroom_humidity_mean.attributes.median }}"
+      
+    master_bath_humidity_median:
+      friendly_name: "Master Bathroom Humidity Median"
+      value_template: "{{ states.sensor.master_bathroom_humidity_mean.attributes.median }}"
+
+    master_bath_battery:
+      friendly_name: "Master Bathroom Battery"
+      device_class: battery
+      value_template: "{{ state_attr('zwave.master_bath_sensor', 'battery_level') }}"
+
+    master_bed_count:
+      friendly_name: "Master Bed Count"
+      icon_template: "{% if states('sensor.master_bed_count')|int == 0 %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ is_state('binary_sensor.master_bed_someone', 'on')|int + is_state('binary_sensor.master_bed_chris', 'on')|int + is_state('binary_sensor.master_bed_melissa', 'on')|int }}"
+      
+    master_count:
+      friendly_name: "Master Count"
+      icon_template: "{% if states('sensor.master_count')|int == 2 %}mdi:account-multiple{% elif states('sensor.master_count')|int == 1 %}mdi:account{% else %}mdi:account-off{% endif %}"
+      value_template: "{{ is_state('binary_sensor.presence_chris', 'on')|int + is_state('binary_sensor.presence_melissa', 'on')|int }}"
+
+- platform: statistics
+  name: Upstairs Bathroom Humidity
+  entity_id: sensor.upstairs_bathroom_humidity
+  sampling_size: 240
+  max_age:
+    hours: 20
+
+- platform: statistics
+  name: Upstairs Bathroom Luminance
+  entity_id: sensor.upstairs_bathroom_luminance
+  sampling_size: 60
+  max_age:
+    minutes: 30
+
+- platform: statistics
+  name: Master Bathroom Humidity
+  entity_id: sensor.master_bath_humidity
+  sampling_size: 240
+  max_age:
+    hours: 20
+
+- platform: statistics
+  name: Master Bathroom Luminance
+  entity_id: sensor.master_bath_luminance
+  sampling_size: 60
+  max_age:
+    minutes: 30
+
+- platform: systemmonitor
+  resources:
+  - type: disk_use_percent
+    arg: /
+  - type: memory_use_percent
+  - type: load_1m
+  - type: load_5m
+  - type: load_15m  

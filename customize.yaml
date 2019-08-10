@@ -1,0 +1,237 @@
+sensor.sense_51a5b3e3:
+  icon: mdi:coffee
+binary_sensor.home_away:
+  hidden: true
+sensor.home_eta:
+  hidden: true
+sensor.upstairs_bathroom_alarm_type:
+  hidden: true
+sensor.upstairs_bathroom_tamper:
+  hidden: true
+sensor.upstairs_bathroom_humidity:
+  icon: mdi:water-percent
+sensor.upstairs_bathroom_motion:
+  hidden: true
+sensor.upstairs_bathroom_power_management:
+  hidden: true
+binary_sensor.upstairs_bathroom_sensor:
+  hidden: true
+sensor.upstairs_bathroom_sourcenodeid:
+  hidden: true
+sensor.upstairs_bathroom_system:
+  hidden: true
+sensor.rbr50_gateway_bytes_received:
+  hidden: true
+sensor.rbr50_gateway_bytes_sent:
+  hidden: true
+sensor.rbr50_gateway_kbytesec_received:
+  hidden: true
+sensor.rbr50_gateway_kbytesec_sent:
+  hidden: true
+sensor.rbr50_gateway_packets_received:
+  hidden: true
+sensor.rbr50_gateway_packets_sent:
+  hidden: true
+sun.sun:
+  hidden: true
+sensor.upstairs_nest_protect_color_status:
+  icon: mdi:smoke-detector
+sensor.ge_26933_smart_motion_dimmer_alarm_type_2:
+  hidden: true
+sensor.ge_26933_smart_motion_dimmer_alarm_type:
+  hidden: true
+sensor.ge_26933_smart_motion_dimmer_sourcenodeid:
+  hidden: true
+sensor.ge_26933_smart_motion_dimmer_sourcenodeid_2:
+  hidden: true
+sensor.upstairs_nest_protect_co_status:
+  icon: mdi:smoke-detector
+sensor.upstairs_nest_protect_smoke_status:
+  icon: mdi:smoke-detector
+sensor.upstairs_bathroom_battery:
+  icon: mdi:battery
+  unit_of_measurement: '%'
+sensor.upstairs_nest_protect_battery_health:
+  icon: mdi:battery
+sensor.basement_nest_protect_color_status:
+  icon: mdi:smoke-detector
+sensor.ge_26933_smart_motion_dimmer_alarm_level_2:
+  hidden: true
+sensor.ge_26933_smart_motion_dimmer_alarm_level:
+  hidden: true
+sensor.ge_26933_smart_motion_dimmer_burglar_2:
+  hidden: true
+light.ge_26933_smart_motion_dimmer_level_2:
+  hidden: true
+sensor.upstairs_hall_motion:
+  hidden: true
+sensor.basement_nest_protect_co_status:
+  icon: mdi:smoke-detector
+sensor.basement_nest_protect_smoke_status:
+  icon: mdi:smoke-detector
+sensor.basement_nest_protect_battery_health:
+  icon: mdi:battery
+sensor.upstairs_bathroom_luminance:
+  icon: mdi:brightness-6
+cover.main_garage_door:
+  device_class: garage
+group.all_automations:
+  hidden: false
+  control: hidden
+  friendly_name: Automations
+sensor.sense_bbbefa14:
+  friendly_name: Curling Iron
+switch.basement_stair_lights_bottom:
+  hidden: true
+switch.basement_stair_lights_top:
+  hidden: true
+switch.basement_stair_lights:
+  icon: mdi:lightbulb
+switch.pool_table_light:
+  icon: mdi:lightbulb
+switch.front_lights:
+  icon: mdi:lightbulb
+switch.computer_light:
+  icon: mdi:lightbulb
+light.maysons_switch:
+  hidden: true
+light.maysons_outlet:
+  hidden: true
+switch.maysons_fan:
+  icon: mdi:fan
+switch.garage_lights:
+  icon: mdi:lightbulb
+zwave.bird_bath:
+  product_name: Outdoor Module
+switch.bird_bath:
+  icon: mdi:fountain
+switch.master_bath_outlet:
+  icon: mdi:power-socket-us
+sensor.master_bath_motion:
+  hidden: true
+sensor.master_bath_outlet_alarm_level:
+  hidden: true
+sensor.master_bath_outlet_alarm_level_2:
+  hidden: true
+sensor.master_bath_alarm_type:
+  hidden: true
+sensor.master_bath_outlet_alarm_type_2:
+  hidden: true
+sensor.master_bath_outlet_sourcenodeid:
+  hidden: true
+switch.master_bath_outlet_switch_2:
+  hidden: true
+switch.master_bath_fan:
+  icon: mdi:fan
+sensor.upstairs_bathroom_burglar:
+  hidden: true
+sensor.upstairs_bathroom_clock:
+  hidden: true
+sensor.upstairs_bathroom_emergency:
+  hidden: true
+sensor.upstairs_bathroom_homehealth:
+  hidden: true
+binary_sensor.maysons_motion:
+  device_class: motion
+sensor.maysons_burglar:
+  hidden: true
+sensor.maysons_sourcenodeid:
+  hidden: true
+sensor.maysons_alarm_level:
+  hidden: true
+sensor.maysons_alarm_type:
+  hidden: true
+device_tracker.chris_phone_gps:
+  icon: mdi:cellphone-android
+  tid: C
+device_tracker.melissa_phone_gps:
+  icon: mdi:cellphone-android
+  tid: M
+switch.upstairs_bathroom_fan_2:
+  hidden: true
+zwave.upstairs_bathroom_fan:
+  icon: mdi:fan
+sensor.upstairs_bathroom_wired_sourcenodeid_2:
+  hidden: true
+sensor.upstairs_bathroom_wired_alarm_type_2:
+  hidden: true
+sensor.upstairs_bathroom_wired_alarm_type:
+  hidden: true
+sensor.upstairs_bathroom_wired_alarm_level_2:
+  hidden: true
+sensor.upstairs_bathroom_wired_alarm_level:
+  hidden: true
+sensor.upstairs_bathroom_wired_motion:
+  hidden: true
+sensor.master_bath_alarm_level:
+  hidden: true
+sensor.master_bath_battery_alarm_type:
+  hidden: true
+sensor.master_bath_burglar:
+  hidden: true
+sensor.master_bath_clock:
+  hidden: true
+sensor.master_bath_homehealth:
+  hidden: true
+sensor.master_bath_power_management:
+  hidden: true
+binary_sensor.master_bath_sensor:
+  hidden: true
+sensor.master_bath_sourcenodeid:
+  hidden: true
+sensor.master_bath_system:
+  hidden: true
+sensor.master_bath_luminance:
+  icon: mdi:brightness-6
+sensor.master_bath_humidity:
+  icon: mdi:water-percent
+switch.upstairs_bathroom_fan:
+  icon: mdi:fan
+sensor.master_bath_humidity_median:
+  icon: mdi:calculator
+  unit_of_measurement: '%'
+sensor.upstairs_bathroom_humidity_median:
+  icon: mdi:calculator
+  unit_of_measurement: '%'
+sensor.time:
+  hidden: true
+zwave.ge_26933_smart_motion_dimmer:
+  hidden: true
+sensor.master_bath_wired_burglar:
+  hidden: true
+sensor.master_bath_wired_sourcenodeid:
+  hidden: true
+binary_sensor.washing_machine:
+  icon: mdi:washing-machine
+binary_sensor.dryer:
+  icon: mdi:tumble-dryer
+sensor.master_bath_battery:
+  unit_of_measurement: '%'
+sensor.maysons_battery:
+  unit_of_measurement: '%'
+sensor.maysons_luminance:
+  icon: mdi:brightness-6
+binary_sensor.whirlpool:
+  icon: mdi:water
+switch.coffee_maker_bold_setting:
+  icon: mdi:coffee
+binary_sensor.garage_freezer_door:
+  icon: mdi:fridge-top
+sensor.garage_fridge_comp_temp:
+  friendly_name: Garage Fridge Compressor Temperature
+binary_sensor.garage_fridge_door:
+  icon: mdi:fridge-bottom
+sensor.garage_fridge_heat_temp:
+  friendly_name: Garage Fridge Heater Temperature
+binary_sensor.garage_fridge_heater:
+  icon: mdi:radiator
+binary_sensor.garage_fridge_compressor_heater:
+  icon: mdi:radiator
+sensor.master_bed_chris_sensor:
+  unit_of_measurement: 'N'
+sensor.master_bed_melissa_sensor:
+  unit_of_measurement: 'N'
+input_boolean.leave_front_lights_on:
+  icon: mdi:lightbulb
+switch.fountain:
+  icon: mdi:fountain

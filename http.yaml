@@ -1,0 +1,2 @@
+base_url: !secret url_base
+ip_ban_enabled: true

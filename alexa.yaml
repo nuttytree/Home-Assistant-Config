@@ -1,0 +1,31 @@
+smart_home:
+  filter:
+    include_domains:
+    - switch
+    - light
+    - climate
+    include_entities:
+    - script.script_start_melissas_car
+    - script.script_start_chris_car
+    exclude_entities:
+    - switch.basement_stair_lights_bottom
+    - switch.basement_stair_lights_top
+    - switch.master_bath_outlet_switch_2
+    - switch.upstairs_bathroom_fan_2
+    - light.ge_26933_smart_motion_dimmer_level_2
+    - light.maysons_switch
+    - light.maysons_outlet
+    - switch.smartstart_1695751
+    - switch.smartstart_706837
+    - switch.smartstart_90947
+  entity_config:
+    switch.front_lights:
+      display_categories: LIGHT
+    switch.computer_light:
+      display_categories: LIGHT
+    switch.basement_stair_lights:
+      display_categories: LIGHT
+    switch.pool_table_light:
+      display_categories: LIGHT
+    switch.garage_lights:
+      display_categories: LIGHT

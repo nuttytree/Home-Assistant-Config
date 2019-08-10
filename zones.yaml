@@ -1,0 +1,23 @@
+- name: home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  radius: 400
+  icon: mdi:home
+
+- name: Chris' Work
+  latitude: !secret chris_work_latitude
+  longitude: !secret chris_work_longitude
+  radius: 150
+  icon: mdi:briefcase
+
+- name: Melissa's Work Office
+  latitude: !secret melissa_office_latitude
+  longitude: !secret melissa_office_longitude
+  radius: 150
+  icon: mdi:briefcase
+
+- name: Melissa's Work Southdale
+  latitude: !secret melissa_southdale_latitude
+  longitude: !secret melissa_southdale_longitude
+  radius: 150
+  icon: mdi:briefcase

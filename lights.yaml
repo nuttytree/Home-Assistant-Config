@@ -1,0 +1,19 @@
+- platform: template
+  lights:
+    maysons:
+      friendly_name: "Mayson's Lights"
+      value_template: "{% if is_state('light.maysons_switch', 'on') %}on{%else%}off{%endif%}"
+      level_template: "{% if is_state('light.maysons_switch', 'on') %}{{state_attr('light.maysons_switch', 'brightness')}}{%else%}0{%endif%}"
+      turn_on:
+        service: light.turn_on
+        data:
+          entity_id: light.maysons_switch, light.maysons_outlet
+      turn_off:
+        service: light.turn_off
+        data:
+          entity_id: light.maysons_switch, light.maysons_outlet
+      set_level:
+        service: light.turn_on
+        entity_id: light.maysons_switch, light.maysons_outlet
+        data_template:
+          brightness: '{{ brightness }}'

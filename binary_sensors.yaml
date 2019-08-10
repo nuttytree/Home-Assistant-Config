@@ -1,0 +1,86 @@
+- platform: template
+  sensors:
+    presence_chris:
+      friendly_name: "Chris"
+      device_class: presence
+      value_template: "{{ is_state('device_tracker.chris_phone_gps', 'home') and is_state('device_tracker.smartstart_706837', 'home') }}"
+
+    presence_melissa:
+      friendly_name: "Melissa"
+      device_class: presence
+      value_template: "{{ is_state('device_tracker.melissa_phone_gps', 'home') and is_state('device_tracker.smartstart_90947', 'home') }}"
+
+    presence_all:
+      friendly_name: "Presence"
+      device_class: presence
+      value_template: "{{ is_state('binary_sensor.presence_chris', 'on') or is_state('binary_sensor.presence_melissa', 'on') or is_state('group.presence_shared', 'on') or is_state('input_boolean.guest_mode', 'on') or is_state('input_boolean.pool_party_mode', 'on') }}"
+    
+    upstairs_hall_motion:
+      friendly_name: "Upstairs Hall Motion"
+      device_class: motion
+      value_template: "{{ is_state('sensor.upstairs_hall_motion', '8') }}"
+
+    master_bath_motion:
+      friendly_name: "Master Bath Motion"
+      device_class: motion
+      value_template: "{{ is_state('sensor.master_bath_motion', '8') }}"
+
+    upstairs_bathroom_motion:
+      friendly_name: "Upstairs Bathroom Motion"
+      device_class: motion
+      value_template: "{{ is_state('sensor.upstairs_bathroom_wired_motion', '8') }}"
+
+    mayson_in_bed:
+      friendly_name: "Mayson is in Bed"
+      entity_id: sensor.time, switch.maysons_fan, binary_sensor.mayson_in_bed
+      icon_template: "{% if is_state('binary_sensor.mayson_in_bed', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ (now().hour >= 20 or now().hour < 7) and is_state('switch.maysons_fan', 'on') }}"
+
+    master_bed_someone:
+      friendly_name: "Chris or Melissa are in Bed"
+      entity_id: binary_sensor.master_bed_chris, binary_sensor.master_bed_melissa, sensor.master_bed_melissa_sensor, sensor.master_bed_melissa_sensor
+      icon_template: "{% if is_state('binary_sensor.master_bed_someone', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ is_state('binary_sensor.master_bed_chris', 'off') and is_state('binary_sensor.master_bed_melissa', 'off') and states('sensor.master_bed_chris_sensor')|int < 800 and states('sensor.master_bed_melissa_sensor')|int < 800}}"
+
+    master_bed_chris:
+      friendly_name: "Chris is in Bed"
+      icon_template: "{% if is_state('binary_sensor.master_bed_chris', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ states('sensor.master_bed_chris_sensor')|int < 300 }}"
+
+    master_bed_melissa:
+      friendly_name: "Melissa is in Bed"
+      icon_template: "{% if is_state('binary_sensor.master_bed_melissa', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ states('sensor.master_bed_melissa_sensor')|int < 300 }}"
+
+    master_bed_any:
+      friendly_name: "Master any in Bed"
+      entity_id: sensor.time, sensor.master_bed_count, binary_sensor.master_bed_any
+      delay_on:
+        minutes: 5
+      delay_off:
+        minutes: 10
+      icon_template: "{% if is_state('binary_sensor.master_bed_any', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_bed_count')|int > 0 }}"
+
+    master_bed_all:
+      friendly_name: "Master all in Bed"
+      entity_id: sensor.time, sensor.master_count, sensor.master_bed_count, binary_sensor.master_bed_all
+      delay_on:
+        minutes: 5
+      delay_off:
+        minutes: 10
+      icon_template: "{% if is_state('binary_sensor.master_bed_all', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_count')|int > 0 and states('sensor.master_count') == states('sensor.master_bed_count') }}"
+
+    upstairs_nest_protect:
+      friendly_name: "Upstairs Nest Protect"
+      entity_id: sensor.upstairs_nest_protect_color_status
+      icon_template: "{{ 'mdi:smoke-detector' }}"
+      value_template: "{{ is_state('sensor.upstairs_nest_protect_color_status', 'green') }}"
+
+    basement_nest_protect:
+      friendly_name: "Basment Nest Protect"
+      entity_id: sensor.basement_nest_protect_color_status
+      icon_template: "{{ 'mdi:smoke-detector' }}"
+      value_template: "{{ is_state('sensor.basement_nest_protect_color_status', 'green') }}"
+

@@ -1,0 +1,11 @@
+- id: storage_alert
+  alias: Storage Space is Low
+  initial_state: 'on'
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.disk_use_percent
+    above: 80
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        message: "Disk usage is at {{ trigger.to_state.state }}%"

@@ -1,0 +1,58 @@
+# sense_auto_group:
+#   url: http://localhost:8123/api/services/group/set
+#   method: POST
+#   headers:
+#     content-type: application/json
+#     x-ha-access: !secret api_password
+#   content_type: application/json
+#   payload: >-
+#     {
+#       "object_id": "sense_energy_devices",
+#       "name": "Sense Energy Devices",
+#       "icon": "mdi:flash",
+#       "entities": [ "sensor.sense_always_on", "sensor.sense_unknown", {% for sensor in states.sensor if sensor.entity_id | truncate(13, false, '') == 'sensor.sense_' and not 'usage' in sensor.entity_id and sensor.entity_id != 'sensor.sense_always_on' and sensor.entity_id != 'sensor.sense_unknown' %}"{{sensor.entity_id}}"{% if not loop.last %},{% endif %}{% endfor %} ]
+#     }
+
+
+all_off_at_night:
+  url: http://localhost:8123/api/services/homeassistant/turn_off
+  method: POST
+  headers:
+    content-type: application/json
+    authorization: !secret home_assistant_access_token
+  content_type: application/json
+  payload: >-
+    {
+      "entity_id": 
+      [
+        "{{ states
+        | selectattr('domain', 'in', 'switch, light')
+        | selectattr('state', 'equalto', 'on')
+        | rejectattr('entity_id', 'in', states.group.on_at_night.attributes.entity_id)
+        | map(attribute = 'entity_id')
+        | list
+        | join('","') }}"
+      ]
+    }
+
+
+all_off_when_leave:
+  url: http://localhost:8123/api/services/homeassistant/turn_off
+  method: POST
+  headers:
+    content-type: application/json
+    authorization: !secret home_assistant_access_token
+  content_type: application/json
+  payload: >-
+    {
+      "entity_id": 
+      [
+        "{{ states
+        | selectattr('domain', 'in', 'switch, light')
+        | selectattr('state', 'equalto', 'on')
+        | rejectattr('entity_id', 'in', states.group.on_when_gone.attributes.entity_id)
+        | map(attribute = 'entity_id')
+        | list
+        | join('","') }}"
+      ]
+    }

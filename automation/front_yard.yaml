@@ -1,0 +1,83 @@
+- id: front_lights_double_tap_up
+  alias: 'Front Lights Double-Tap Up'
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+        entity_id: zwave.front_lights
+        basic_level: 255
+  action:  
+  - service: homeassistant.turn_on
+    entity_id:
+    - switch.front_lights
+    - input_boolean.leave_front_lights_on
+
+
+- id: front_lights_on
+  alias: Front Lights On
+  initial_state: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: switch.front_lights
+      state: 'off'
+      for: '00:02:00'
+    - condition: or
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+  trigger:
+  - platform: state
+    entity_id: device_tracker.chris_phone_gps, device_tracker.melissa_phone_gps, device_tracker.smartstart_706837, device_tracker.smartstart_90947, device_tracker.smartstart_1695751
+    to: 'home'
+  - platform: state
+    entity_id: cover.main_garage_door
+    to: 'opening'
+  - platform: state
+    entity_id: cover.main_garage_door
+    to: 'open'
+  - platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: front_lights
+  action:
+  - service: switch.turn_on
+    entity_id:
+    - switch.front_lights
+
+
+- id: front_lights_off
+  alias: Front Lights Off
+  initial_state: 'on'
+  trigger:
+  - platform: state 
+    entity_id: switch.front_lights
+    to: 'on'
+    for: '00:20:00'
+  - platform: state
+    entity_id: cover.main_garage_door
+    to: 'closed'
+    for: '00:00:30'
+  - platform: state
+    entity_id: switch.front_lights
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: switch.front_lights
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.leave_front_lights_on
+        state: 'off'
+  action:
+  - service: homeassistant.turn_off
+    entity_id:
+    - input_boolean.leave_front_lights_on
+    - switch.front_lights
+
+

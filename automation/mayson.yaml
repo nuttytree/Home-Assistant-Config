@@ -1,0 +1,54 @@
+- id: maysons_lights
+  alias: Turn Mayson's Lights Off
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.maysons_motion
+    to: 'off'
+    for: '00:10:00'
+  action:
+  - service: light.turn_off
+    entity_id: light.maysons
+
+
+- id: mayson_double_tap_up
+  alias: "Mayson's Light Double-Tap Up"
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+      entity_id: zwave.maysons_lights_switch
+      basic_level: 255
+  action:  
+  - service: switch.turn_on
+    entity_id:
+    - switch.maysons_fan
+
+
+- id: mayson_double_tap_down
+  alias: "Mayson's Light Double-Tap Down"
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+      entity_id: zwave.maysons_lights_switch
+      basic_level: 0
+  action:  
+  - service: switch.turn_off
+    entity_id:
+    - switch.maysons_fan
+
+
+- id: maysons_fan
+  alias: Turn Mayson's Fan Off
+  initial_state: 'on'
+  trigger:
+  - platform: time
+    at: '07:00:00'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.maysons_fan
+
+

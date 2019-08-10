@@ -1,0 +1,127 @@
+homeassistant:
+  name: Home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: 300
+  unit_system: imperial
+  time_zone: America/Chicago
+  customize: !include customize.yaml
+  auth_providers:
+   - type: homeassistant
+
+alexa: !include alexa.yaml
+
+alexa_media: !include alexa_media.yaml
+
+api:
+
+auth:
+
+automation: !include_dir_merge_list automation/
+
+binary_sensor: !include binary_sensors.yaml
+
+camera:
+  - platform: zoneminder
+
+climate: !include climates.yaml
+
+config:
+
+cover: !include covers.yaml
+
+device_tracker: !include device_trackers.yaml
+
+discovery:
+
+frontend:
+
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
+
+google_assistant: !include google_assistant.yaml
+
+group: !include groups.yaml
+
+hacs:
+  token: !secret hacs_token
+
+history:
+
+http: !include http.yaml
+
+input_boolean: !include input_booleans.yaml
+
+input_datetime: !include input_datetime.yaml
+
+input_number: !include input_number.yaml
+
+input_select: !include input_selects.yaml
+
+light: !include lights.yaml
+
+logbook:
+
+#logger:
+#  default: debug
+
+lovelace:
+  mode: yaml
+
+map:
+
+media_player: !include media_players.yaml
+
+mqtt: !include mqtt.yaml
+    
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+
+notify: !include notifiers.yaml
+
+recorder:
+  db_url: !secret recorder_db_url
+
+remote: !include remotes.yaml
+
+rest_command: !include rest_commands.yaml
+
+sense:
+  email: !secret sense_username
+  password: !secret sense_password
+
+script: !include scripts.yaml
+
+sensor: !include sensors.yaml
+
+smartstart:
+  username: !secret smartstart_username
+  password: !secret smartstart_password
+
+stream:
+
+sun:
+
+switch: !include switches.yaml
+
+system_health:
+
+tts:
+- platform: google_translate
+
+updater:
+  include_used_components: true
+
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    mode: daily
+
+zone: !include zones.yaml
+
+zoneminder:
+  - host: docker:5001
+
+zwave: !include zwave.yaml

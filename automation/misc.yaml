@@ -1,0 +1,34 @@
+- id: fix_light_reporting
+  alias: 'Fix Incorrect Light State Reporting'
+  initial_state: 'on'
+  condition:
+  - condition: state
+    entity_id: zwave.aeotec_zw090_zstick_gen5_us
+    state: 'ready'
+  trigger:
+    - platform: state
+      entity_id: light.master_bath,light.upstairs_bathroom_main,light.upstairs_bathroom_vanity,light.bar,light.deck,light.back,light.guest_bedroom
+  action:
+    - delay: '00:00:05'
+    - service: zwave.refresh_node
+      data_template:
+        node_id: '{{ state_attr(trigger.entity_id, "node_id")|int }}'
+    - delay: '00:00:05'
+    - service: zwave.refresh_node
+      data_template:
+        node_id: '{{ state_attr(trigger.entity_id, "node_id")|int }}'
+    - delay: '00:00:05'
+    - service: zwave.refresh_node
+      data_template:
+        node_id: '{{ state_attr(trigger.entity_id, "node_id")|int }}'
+
+
+# - id: auto_groups
+#   alias: Auto Groups
+#   initial_state: 'on'
+#   trigger:
+#   - platform: homeassistant
+#     event: start
+#   action:
+#   - delay: '00:00:10'
+#   - service: rest_command.sense_auto_group

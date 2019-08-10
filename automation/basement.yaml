@@ -1,0 +1,51 @@
+- id: basement_stair_lights_double_tap_up
+  alias: 'Basement Stair Lights Double-Tap Up'
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+      entity_id: zwave.basement_stair_lights_top
+      basic_level: 255
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+      entity_id: zwave.basement_stair_lights_bottom
+      basic_level: 255
+  action:  
+  - service: homeassistant.turn_on
+    entity_id:
+    - switch.basement_stair_lights_top
+    - light.basement_tv
+    - light.basement
+    - light.bar
+    - switch.pool_table_light
+    - switch.basement_stair_lights_bottom
+
+
+- id: basement_stair_lights_double_tap_down
+  alias: 'Basement Stair Lights Double-Tap Down'
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+        entity_id: zwave.basement_stair_lights_top
+        basic_level: 0
+  - platform: event
+    event_type: zwave.node_event
+    event_data:
+        entity_id: zwave.basement_stair_lights_bottom
+        basic_level: 0
+  action:  
+  - service: homeassistant.turn_off
+    entity_id:
+    - switch.basement_stair_lights_top
+    - light.basement_tv
+    - remote.basement_harmony_hub
+    - light.basement
+    - light.bar
+    - switch.pool_table_light
+    - switch.basement_stair_lights_bottom
+
+

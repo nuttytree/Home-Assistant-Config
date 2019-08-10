@@ -1,0 +1,179 @@
+light.upstairs_bathroom_main:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.upstairs_bathroom_vanity:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+sensor.upstairs_bathroom_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_tamper:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_power_management:
+  ignored: true
+  polling_intensity: 0
+binary_sensor.upstairs_bathroom_sensor:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_system:
+  ignored: true
+  polling_intensity: 0
+light.upstairs_hall:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.basement_tv:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.basement:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.bar:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.guest_bedroom:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.maysons_switch:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.maysons_outlet:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.deck:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.back:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.master_bath:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+light.master_toilet:
+  ignored: false
+  polling_intensity: 0
+  refresh_value: true
+  delay: 6
+sensor.master_bath_outlet_alarm_level_2:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_outlet_alarm_level:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_alarm_type_2:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_outlet_alarm_type_2:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_outlet_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+switch.master_bath_outlet_switch_2:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_burglar:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_clock:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_emergency:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_homehealth:
+  ignored: true
+  polling_intensity: 0
+sensor.maysons_alarm_level:
+  ignored: true
+  polling_intensity: 0
+sensor.maysons_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.maysons_burglar:
+  ignored: true
+  polling_intensity: 0
+sensor.maysons_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+switch.upstairs_bathroom_fan_2:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_wired_alarm_level:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_wired_alarm_level_2:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_wired_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_wired_alarm_type_2:
+  ignored: true
+  polling_intensity: 0
+sensor.upstairs_bathroom_wired_sourcenodeid_2:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_alarm_level:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_battery_alarm_type:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_burglar:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_clock:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_homehealth:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_power_management:
+  ignored: true
+  polling_intensity: 0
+binary_sensor.master_bath_sensor:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_sourcenodeid:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_system:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_wired_burglar:
+  ignored: true
+  polling_intensity: 0
+sensor.master_bath_wired_sourcenodeid:
+  ignored: true
+  polling_intensity: 0

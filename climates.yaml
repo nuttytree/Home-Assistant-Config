@@ -1,0 +1,56 @@
+- platform: honeywell
+  username: !secret honeywell_username
+  password: !secret honeywell_password
+  region: us
+  scan_interval: 151
+
+- platform: mqtt
+  name: Nutty Upstairs
+  unique_id: nutty_upstairs
+  current_temperature_topic: "mqtt/climate/nutty_upstairs/temp_state"
+  mode_command_topic: "mqtt/climate/nutty_upstairs/mode_cmd"
+  mode_state_topic: "mqtt/climate/nutty_upstairs/state"
+  modes:
+    - "off"
+    - "idle"
+    - "cool"
+    - "heat"
+    - "fan"
+  temperature_command_topic: "mqtt/climate/nutty_upstairs/setpnt_cmd"
+  temperature_state_topic: "mqtt/climate/nutty_upstairs/setpnt_state"
+  min_temp: 50
+  max_temp: 90
+
+- platform: mqtt
+  name: Nutty Main
+  unique_id: nutty_main
+  current_temperature_topic: "mqtt/climate/nutty_main/temp_state"
+  mode_command_topic: "mqtt/climate/nutty_main/mode_cmd"
+  mode_state_topic: "mqtt/climate/nutty_main/state"
+  modes:
+    - "off"
+    - "idle"
+    - "cool"
+    - "heat"
+    - "fan"
+  temperature_command_topic: "mqtt/climate/nutty_main/setpnt_cmd"
+  temperature_state_topic: "mqtt/climate/nutty_main/setpnt_state"
+  min_temp: 50
+  max_temp: 90
+
+- platform: mqtt
+  name: Nutty Basement
+  unique_id: nutty_basement
+  current_temperature_topic: "mqtt/climate/nutty_basement/temp_state"
+  mode_command_topic: "mqtt/climate/nutty_basement/mode_cmd"
+  mode_state_topic: "mqtt/climate/nutty_basement/state"
+  modes:
+    - "off"
+    - "idle"
+    - "cool"
+    - "heat"
+    - "fan"
+  temperature_command_topic: "mqtt/climate/nutty_basement/setpnt_cmd"
+  temperature_state_topic: "mqtt/climate/nutty_basement/setpnt_state"
+  min_temp: 50
+  max_temp: 90

@@ -1,0 +1,60 @@
+- id: good_morning
+  alias: 'Set Day Mode'
+  initial_state: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.day_night
+    state: 'off'
+  trigger:
+  - platform: state
+    entity_id: switch.coffee_maker
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.master_bed_all
+    to: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id:
+    - input_boolean.day_night
+
+
+- id: good_night
+  alias: 'Set Night Mode'
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.master_bed_all
+    to: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id:
+    - input_boolean.day_night
+
+
+- id: all_off_when_leave
+  alias: Turn Off Everything When Leaving
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_all
+    to: 'off'
+    for: '00:00:30'
+  action:
+  - service: rest_command.all_off_when_leave
+  - service: cover.close_cover
+    entity_id: cover.main_garage_doorX
+
+
+- id: all_off_at_night
+  alias: Turn Off Everything At Night
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: input_boolean.day_night
+    to: 'off'
+  action:
+  - service: rest_command.all_off_at_night
+  - service: cover.close_cover
+    entity_id: cover.main_garage_door
+
+

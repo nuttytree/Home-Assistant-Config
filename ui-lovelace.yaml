@@ -1,0 +1,320 @@
+resources:
+  - type: js
+    url: 'https://unpkg.com/moment@2.22.2/moment.js'
+  - type: js
+    url: /local/custom-cards/popup-card.js
+  - type: js
+    url: /local/custom-cards/card-tools.js
+  
+  - type: module
+    url: /local/custom-cards/calendar-card.js?v=1.0.1
+  - type: module
+    url: /local/custom-cards/simple-thermostat.min.js?v=1
+  - type: module
+    url: https://cdn.jsdelivr.net/gh/bramkragten/custom-ui@master/swipe-card/swipe-card.min.js
+  - type: module
+    url: /local/custom-cards/group-card.js?v=1
+  - type: module
+    url: /local/custom-cards/groups-card.js?v=1
+
+title: The Nutty Home
+views:
+  - title: Main
+    icon: 'mdi:home'
+    panel: false
+    path: main
+    cards:
+      - type: 'custom:swipe-card'
+        cards:
+          - entity: climate.basement
+            hide:
+              mode: true
+            icon: 'mdi:thermostat'
+            name: Basement
+            sensors: null
+            step_size: 1
+            type: 'custom:simple-thermostat'
+          - entity: climate.lower
+            hide:
+              mode: true
+            icon: 'mdi:thermostat'
+            name: Main Floor
+            sensors: null
+            step_size: 1
+            type: 'custom:simple-thermostat'
+          - entity: climate.upper
+            hide:
+              mode: true
+            icon: 'mdi:thermostat'
+            name: Upstairs
+            sensors: null
+            step_size: 1
+            type: 'custom:simple-thermostat'
+        parameters:
+          effect: cube
+          initialSlide: 1
+          scrollbar:
+            draggable: true
+            hide: false
+            snapOnRelease: true
+          spaceBetween: 8
+      - type: 'custom:calendar-card'
+        entities:
+          - calendar.nussbaum_family_calendar
+        name: Family Calendar
+        numberOfDays: 30
+      - entity: weather.dark_sky
+        name: Weather
+        type: weather-forecast
+      - card:
+          type: entity-filter
+          card:
+            show_header_toggle: false
+            title: What's Turned On
+            type: entities
+          entities:
+          state_filter:
+            - 'on'
+        type: 'custom:groups-card'
+        entities:
+          - binary_sensor.oven
+        groups:
+          - group.all_lights
+          - group.all_switches
+        exclude:
+          - switch.maysons_fan
+          - switch.pool_pump_new
+          - switch.pool_cleaner_new
+          - switch.pool_heater_new
+          - switch.pool_fill_valve
+          - switch.pool_drain_valve
+  - title: Ground Floor
+    icon: 'mdi:home-floor-g'
+    path: main_floor_view
+    cards:
+      - title: Kitchen
+        type: entities
+        entities:
+          - switch.coffee_maker
+          - switch.coffee_maker_bold_setting
+          - binary_sensor.oven
+        show_header_toggle: false
+      - title: Family Room
+        type: entities
+        entities:
+          - switch.computer_light
+          - switch.family_room_tv
+      - entity: media_player.family_room_echo
+        type: media-control
+      - entity: media_player.living_room_echo
+        type: media-control
+      - title: Laundry Room
+        type: entities
+        entities:
+          - binary_sensor.washing_machine
+          - binary_sensor.dryer
+        show_header_toggle: false
+  - title: Upstairs
+    icon: mdi:home-floor-2
+    path: upstairs_view
+    cards:
+      - title: Upstairs Hall
+        type: entities
+        entities:
+          - light.upstairs_hall
+          - binary_sensor.upstairs_hall_motion
+          - sensor.upstairs_nest_protect_smoke_status
+          - sensor.upstairs_nest_protect_co_status
+          - sensor.upstairs_nest_protect_battery_health
+          - binary_sensor.upstairs_nest_protect_online
+        show_header_toggle: false
+      - entities:
+          - light.master_bath
+          - light.master_toilet
+          - switch.master_bath_fan
+          - switch.master_bath_outlet
+          - binary_sensor.whirlpool
+          - sensor.master_bath_humidity
+          - sensor.master_bath_temperature
+          - sensor.master_bath_luminance
+          - binary_sensor.master_bath_motion
+          - sensor.master_bath_battery
+        title: Master Bathroom
+        type: entities
+      - entities:
+          - light.upstairs_bathroom_main
+          - light.upstairs_bathroom_vanity
+          - switch.upstairs_bathroom_fan
+          - sensor.upstairs_bathroom_humidity
+          - sensor.upstairs_bathroom_temperature
+          - sensor.upstairs_bathroom_luminance
+          - binary_sensor.upstairs_bathroom_motion
+          - sensor.upstairs_bathroom_battery
+        title: Upstairs Bathroom
+        type: entities
+      - entities:
+          - light.maysons
+          - switch.maysons_fan
+          - binary_sensor.maysons_motion
+          - sensor.maysons_luminance
+          - sensor.maysons_battery
+        title: Mayson's Bedroom
+        type: entities
+      - entities:
+          - light.guest_bedroom
+        title: Guest Bedroom
+        type: entities
+  - title: Basement
+    icon: 'mdi:home-floor-b'
+    path: basement_view
+    cards:
+      - entities:
+          - switch.basement_stair_lights
+          - light.basement_tv
+          - light.basement
+          - light.bar
+          - switch.pool_table_light
+          - switch.basement_tv
+          - switch.xbox
+        title: Basement
+        type: entities
+      - entities:
+          - sensor.basement_nest_protect_smoke_status
+          - sensor.basement_nest_protect_co_status
+          - sensor.basement_nest_protect_battery_health
+          - binary_sensor.basement_nest_protect_online
+        title: Basement Nest Protect
+        type: entities
+        show_header_toggle: false
+  - title: Garage
+    icon: 'mdi:garage'
+    path: garage_view
+    cards:
+      - entities:
+          - switch.garage_lights
+          - cover.main_garage_door
+        title: Garage
+        type: entities
+      - entities:
+          - sensor.garage_fridge_temperature
+          - sensor.garage_freezer_temperature
+          - sensor.garage_fridge_heat_temp
+          - sensor.garage_fridge_comp_temp
+          - binary_sensor.garage_fridge_door
+          - binary_sensor.garage_freezer_door
+          - binary_sensor.garage_fridge_heater
+          - binary_sensor.garage_fridge_compressor_heater
+        title: Garage Fridge
+        type: entities
+      - entities:
+          - device_tracker.smartstart_90947
+          - switch.smartstart_90947
+          - lock.smartstart_90947
+        title: MKX
+        type: entities
+      - entities:
+          - device_tracker.smartstart_706837
+          - switch.smartstart_706837
+          - lock.smartstart_706837
+        title: G35
+        type: entities
+      - entities:
+          - device_tracker.smartstart_1695751
+          - switch.smartstart_1695751
+          - lock.smartstart_1695751
+        title: Suburban
+        type: entities
+  - title: Outside
+    icon: 'mdi:pine-tree'
+    path: outside_view
+    cards:
+      - entities:
+          - switch.front_lights
+          - light.deck
+          - light.back
+          - light.gazebo
+          - switch.bird_bath
+          - switch.fountain
+        title: Outside
+        type: entities
+  - title: Cameras
+    icon: mdi:cctv
+    path: cameras
+    cards:
+      - type: picture-glance
+        entities: []
+        camera_image: camera.gate
+        camera_view: live
+      - type: picture-glance
+        entities: []
+        camera_image: camera.pool
+        camera_view: live
+  - title: Presence
+    icon: 'mdi:account-switch'
+    path: presence_view
+    cards:
+      - entities:
+          - binary_sensor.presence_all
+          - sensor.day_night
+          - input_boolean.guest_mode
+          - input_boolean.pool_party_mode
+        title: Home
+        type: entities
+      - entities:
+          - binary_sensor.presence_chris
+          - device_tracker.chris_phone_gps
+          - device_tracker.smartstart_706837
+        title: Chris
+        type: entities
+      - entities:
+          - binary_sensor.presence_melissa
+          - device_tracker.melissa_phone_gps
+          - device_tracker.smartstart_90947
+        title: Melissa
+        type: entities
+      - entities:
+          - binary_sensor.mayson_in_bed
+        title: Mayson
+        type: entities
+      - entities:
+          - device_tracker.smartstart_1695751
+          - sensor.master_count
+        title: Chris and Melissa
+        type: entities
+      - entities:
+          - binary_sensor.master_bed_any
+          - binary_sensor.master_bed_all
+          - binary_sensor.master_bed_someone
+          - binary_sensor.master_bed_chris
+          - binary_sensor.master_bed_melissa
+          - sensor.master_bed_melissa_sensor
+          - sensor.master_bed_chris_sensor
+          - sensor.master_bed_count
+        title: Master Bed
+        type: entities
+  - title: Energy
+    icon: 'mdi:flash'
+    path: energy_view
+    cards:
+      - entities:
+          - sensor.energy_usage
+          - sensor.daily_usage
+          - sensor.weekly_usage
+          - sensor.monthly_usage
+        title: Energy Usage
+        type: entities
+        show_header_toggle: false
+  - title: System
+    icon: 'mdi:server'
+    path: system_view
+    cards:
+      - entities:
+          - updater.updater
+          - sensor.load_1m
+          - sensor.load_5m
+          - sensor.load_15m
+          - sensor.memory_use_percent
+          - sensor.disk_use_percent
+        title: System
+        type: entities
+  - !include /config/lovelace/kitchen_tablet.yaml

@@ -1,0 +1,14 @@
+leave_front_lights_on:
+  name: Leave the Front Lights On
+
+guest_mode:
+  name: Guest Mode
+
+pool_party_mode:
+  name: Pool Party Mode
+
+day_night:
+  name: Day/Night Mode
+
+start_coffee:
+  name: Start Coffee
