@@ -287,8 +287,6 @@ views:
           - binary_sensor.master_bed_someone
           - binary_sensor.master_bed_chris
           - binary_sensor.master_bed_melissa
-          - sensor.master_bed_melissa_sensor
-          - sensor.master_bed_chris_sensor
           - sensor.master_bed_count
         title: Master Bed
         type: entities

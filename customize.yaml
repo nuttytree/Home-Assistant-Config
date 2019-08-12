@@ -228,10 +228,16 @@ binary_sensor.garage_fridge_heater:
 binary_sensor.garage_fridge_compressor_heater:
   icon: mdi:radiator
 sensor.master_bed_chris_sensor:
-  unit_of_measurement: 'N'
+  unit_of_measurement: N
 sensor.master_bed_melissa_sensor:
-  unit_of_measurement: 'N'
+  unit_of_measurement: N
 input_boolean.leave_front_lights_on:
   icon: mdi:lightbulb
 switch.fountain:
   icon: mdi:fountain
+binary_sensor.master_bed_chris:
+  icon: mdi:hotel
+binary_sensor.master_bed_melissa:
+  icon: mdi:hotel
+binary_sensor.master_bed_someone:
+  icon: mdi:hotel
