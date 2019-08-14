@@ -29,3 +29,5 @@ smart_home:
       display_categories: LIGHT
     switch.garage_lights:
       display_categories: LIGHT
+    switch.patio_lights:
+      display_categories: LIGHT

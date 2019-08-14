@@ -1,0 +1,24 @@
+- id: patio_lights_on_at_night
+  alias: 'Patio Lights On At Night'
+  initial_state: 'on'
+  trigger:
+  - platform: sun
+    event: sunset
+  - platform: state
+    entity_id: binary_sensor.home_away
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.home_away
+        state: 'on'
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+  action:  
+  - service: homeassistant.turn_on
+    entity_id:
+    - switch.patio_lights
+
+

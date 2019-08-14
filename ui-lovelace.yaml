@@ -233,6 +233,7 @@ views:
           - light.deck
           - light.back
           - light.gazebo
+          - switch.patio_lights
           - switch.bird_bath
           - switch.fountain
         title: Outside
