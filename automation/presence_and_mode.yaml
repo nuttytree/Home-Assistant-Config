@@ -42,7 +42,7 @@
   action:
   - service: rest_command.all_off_when_leave
   - service: cover.close_cover
-    entity_id: cover.main_garage_doorX
+    entity_id: cover.main_garage_door
 
 
 - id: all_off_at_night

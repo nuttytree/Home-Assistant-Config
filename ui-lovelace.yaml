@@ -88,6 +88,7 @@ views:
           - switch.pool_heater_new
           - switch.pool_fill_valve
           - switch.pool_drain_valve
+          - switch.patio_lights
   - title: Ground Floor
     icon: 'mdi:home-floor-g'
     path: main_floor_view
@@ -190,40 +191,41 @@ views:
     icon: 'mdi:garage'
     path: garage_view
     cards:
-      - entities:
+      - title: Garage
+        type: entities
+        entities:
           - switch.garage_lights
           - cover.main_garage_door
-        title: Garage
+      - title: Garage Fridge
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - sensor.garage_fridge_temperature
           - sensor.garage_freezer_temperature
-          - sensor.garage_fridge_heat_temp
-          - sensor.garage_fridge_comp_temp
-          - binary_sensor.garage_fridge_door
-          - binary_sensor.garage_freezer_door
+          - sensor.garage_fridge_compressor_temperature
           - binary_sensor.garage_fridge_heater
           - binary_sensor.garage_fridge_compressor_heater
-        title: Garage Fridge
+      - title: MKX
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - device_tracker.smartstart_90947
           - switch.smartstart_90947
           - lock.smartstart_90947
-        title: MKX
+      - title: G35
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - device_tracker.smartstart_706837
           - switch.smartstart_706837
           - lock.smartstart_706837
-        title: G35
+      - title: Suburban
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - device_tracker.smartstart_1695751
           - switch.smartstart_1695751
           - lock.smartstart_1695751
-        title: Suburban
-        type: entities
   - title: Outside
     icon: 'mdi:pine-tree'
     path: outside_view
@@ -254,43 +256,49 @@ views:
     icon: 'mdi:account-switch'
     path: presence_view
     cards:
-      - entities:
+      - title: Home
+        type: entities
+        show_header_toggle: false
+        entities:
           - binary_sensor.presence_all
           - sensor.day_night
           - input_boolean.guest_mode
           - input_boolean.pool_party_mode
-        title: Home
+      - title: Chris
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - binary_sensor.presence_chris
           - device_tracker.chris_phone_gps
           - device_tracker.smartstart_706837
-        title: Chris
+      - title: Melissa
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - binary_sensor.presence_melissa
           - device_tracker.melissa_phone_gps
           - device_tracker.smartstart_90947
-        title: Melissa
+      - title: Mayson
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - binary_sensor.mayson_in_bed
-        title: Mayson
+      - title: Chris and Melissa
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - device_tracker.smartstart_1695751
           - sensor.master_count
-        title: Chris and Melissa
+      - title: Master Bed
         type: entities
-      - entities:
+        show_header_toggle: false
+        entities:
           - binary_sensor.master_bed_any
           - binary_sensor.master_bed_all
           - binary_sensor.master_bed_someone
           - binary_sensor.master_bed_chris
           - binary_sensor.master_bed_melissa
           - sensor.master_bed_count
-        title: Master Bed
-        type: entities
   - title: Energy
     icon: 'mdi:flash'
     path: energy_view
@@ -307,13 +315,15 @@ views:
     icon: 'mdi:server'
     path: system_view
     cards:
-      - entities:
-          - updater.updater
+      - title: System
+        type: entities
+        show_header_toggle: false
+        entities:
+          - sensor.current_version
+          - sensor.latest_version
           - sensor.load_1m
           - sensor.load_5m
           - sensor.load_15m
           - sensor.memory_use_percent
           - sensor.disk_use_percent
-        title: System
-        type: entities
   - !include /config/lovelace/kitchen_tablet.yaml

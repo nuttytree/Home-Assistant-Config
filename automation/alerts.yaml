@@ -2,10 +2,78 @@
   alias: Storage Space is Low
   initial_state: 'on'
   trigger:
-  - platform: numeric_state
-    entity_id: sensor.disk_use_percent
-    above: 80
+    - platform: numeric_state
+      entity_id: sensor.disk_use_percent
+      above: 80
   action:
     - service: notify.html5_chris_pixel_3
       data_template:
+        title: "Docker Disk Space"
         message: "Disk usage is at {{ trigger.to_state.state }}%"
+
+
+- id: garage_freezer_temp_alert
+  alias: Garage Freezer Temperature Alert
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.garage_freezer_temperature
+      above: 25
+      for: '00:10:00'
+    - platform: numeric_state
+      entity_id: sensor.garage_freezer_temperature
+      above: 32
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        title: "Garage Freezer"
+        message: "Garage freezer temperature is {{ trigger.to_state.state }} °F"
+
+
+- id: garage_fridge_temp_alert
+  alias: Garage Fridge Temperature Alert
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.garage_fridge_temperature
+      above: 40
+    - platform: numeric_state
+      entity_id: sensor.garage_fridge_temperature
+      below: 34
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        title: "Garage Fridge"
+        message: "Garage fridge temperature is {{ trigger.to_state.state }} °F"
+
+
+- id: esphome_device_offline
+  alias: ESPHome Device is Offline
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: 
+        - binary_sensor.garage_fridge_status
+        - binary_sensor.master_bed_status
+        - binary_sensor.patio_lights_status
+      to: 'off'
+      for: "00:00:30"
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        title: "{{ trigger.state.name }}"
+        message: "{{ trigger.state.name }} is offline"
+
+
+- id: time_to_upgrade
+  alias: "Time to Upgrade Home Assistant"
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.time_to_upgrade
+      to: 'on'
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        title: "Time to Upgrade Home Assistant!"
+        message: 'The current version is {{ states("sensor.current_version") }} and the latest version is {{ states("sensor.latest_version") }}'

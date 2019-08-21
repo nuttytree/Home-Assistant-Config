@@ -18,16 +18,33 @@ smart_home:
     - switch.smartstart_1695751
     - switch.smartstart_706837
     - switch.smartstart_90947
+    - switch.restart_master_bed
+    - switch.restart_patio_lights
+    - switch.basement_echo_do_not_disturb_switch
+    - switch.basement_echo_repeat_switch
+    - switch.basement_echo_shuffle_switch
+    - switch.bedroom_echo_do_not_disturb_switch
+    - switch.bedroom_echo_repeat_switch
+    - switch.bedroom_echo_shuffle_switch
+    - switch.living_room_echo_do_not_disturb_switch
+    - switch.living_room_echo_repeat_switch
+    - switch.living_room_echo_shuffle_switch
+    - switch.office_echo_do_not_disturb_switch
+    - switch.office_echo_repeat_switch
+    - switch.office_echo_shuffle_switch
+    - switch.family_room_echo_do_not_disturb_switch
+    - switch.family_room_echo_repeat_switch
+    - switch.family_room_echo_shuffle_switch
   entity_config:
-    switch.front_lights:
+    switch.basement_stair_lights:
       display_categories: LIGHT
     switch.computer_light:
       display_categories: LIGHT
-    switch.basement_stair_lights:
-      display_categories: LIGHT
-    switch.pool_table_light:
+    switch.front_lights:
       display_categories: LIGHT
     switch.garage_lights:
       display_categories: LIGHT
     switch.patio_lights:
+      display_categories: LIGHT
+    switch.pool_table_light:
       display_categories: LIGHT

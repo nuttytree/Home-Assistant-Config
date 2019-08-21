@@ -75,4 +75,8 @@
   - type: memory_use_percent
   - type: load_1m
   - type: load_5m
-  - type: load_15m  
+  - type: load_15m
+
+- platform: version
+- platform: version
+  source: docker

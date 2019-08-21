@@ -2,23 +2,67 @@
   alias: 'Patio Lights On At Night'
   initial_state: 'on'
   trigger:
-  - platform: sun
-    event: sunset
-  - platform: state
-    entity_id: binary_sensor.home_away
-    to: 'on'
+    - platform: sun
+      event: sunset
+    - platform: state
+      entity_id: binary_sensor.presence_all
+      to: 'on'
   condition:
     condition: and
     conditions:
       - condition: state
-        entity_id: binary_sensor.home_away
+        entity_id: binary_sensor.presence_all
         state: 'on'
       - condition: state
         entity_id: sun.sun
         state: 'below_horizon'
   action:  
-  - service: homeassistant.turn_on
-    entity_id:
-    - switch.patio_lights
+    - service: homeassistant.turn_on
+      entity_id:
+        - switch.patio_lights
 
+
+- id: fountain_bird_bath_for_pool_party
+  alias: 'Fountain and Bird Bath for Pool Party'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.pool_party_mode
+  action:  
+    - service_template: >
+        homeassistant.{% if trigger.to_state.state == 'on' %}turn_on{% else %}turn_off{% endif %}
+      entity_id:
+        - switch.fountain
+        - switch.bird_bath
+
+
+- id: lights_for_pool_party
+  alias: 'Lights for Pool Party'
+  initial_state: 'on'
+  trigger:
+    - platform: sun
+      event: sunset
+    - platform: state
+      entity_id: input_boolean.pool_party_mode
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.pool_party_mode
+        state: 'on'
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+  action:  
+    - service: light.turn_on
+      data:
+        brightness_pct: 50
+      entity_id:
+        - light.back
+        - light.deck
+        - light.gazebo
+    - service: switch.turn_on
+      entity_id:
+        - switch.pool_lights
 

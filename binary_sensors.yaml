@@ -68,3 +68,8 @@
       icon_template: "{{ 'mdi:smoke-detector' }}"
       value_template: "{{ is_state('sensor.basement_nest_protect_color_status', 'green') }}"
 
+    time_to_upgrade:
+      friendly_name: "Time to Upgrade Home Assistant"
+      entity_id: sensor.current_version, sensor.latest_version
+      icon_template: mdi:package-up
+      value_template: '{{ states("sensor.latest_version").split(".")[1] | int - states("sensor.current_version").split(".")[1] | int > 1 }}'
