@@ -96,14 +96,14 @@ views:
       - title: Kitchen
         type: entities
         entities:
-          - switch.coffee_maker
-          - switch.coffee_maker_bold_setting
+          # - switch.coffee_maker
+          # - switch.coffee_maker_bold_setting
           - binary_sensor.oven
         show_header_toggle: false
       - title: Family Room
         type: entities
         entities:
-          - switch.computer_light
+          # - switch.computer_light
           - switch.family_room_tv
       - entity: media_player.family_room_echo
         type: media-control
@@ -122,7 +122,7 @@ views:
       - title: Upstairs Hall
         type: entities
         entities:
-          - light.upstairs_hall
+          # - light.upstairs_hall
           - binary_sensor.upstairs_hall_motion
           - sensor.upstairs_nest_protect_smoke_status
           - sensor.upstairs_nest_protect_co_status
@@ -134,7 +134,7 @@ views:
           - light.master_toilet
           - switch.master_bath_fan
           - switch.master_bath_outlet
-          - binary_sensor.whirlpool
+          # - binary_sensor.whirlpool
           - sensor.master_bath_humidity
           - sensor.master_bath_temperature
           - sensor.master_bath_luminance
@@ -200,9 +200,9 @@ views:
         type: entities
         show_header_toggle: false
         entities:
-          - sensor.garage_fridge_temperature
-          - sensor.garage_freezer_temperature
-          - sensor.garage_fridge_compressor_temperature
+          - sensor.garage_fridge_temp
+          - sensor.garage_freezer_temp
+          - sensor.garage_fridge_compressor_temp
           - binary_sensor.garage_fridge_heater
           - binary_sensor.garage_fridge_compressor_heater
       - title: MKX

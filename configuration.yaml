@@ -84,7 +84,7 @@ map:
 
 media_player: !include media_players.yaml
 
-mqtt: !include mqtt.yaml
+# mqtt: !include mqtt.yaml
     
 nest:
   client_id: !secret nest_client_id

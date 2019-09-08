@@ -40,6 +40,11 @@
       icon_template: "{% if states('sensor.master_count')|int == 2 %}mdi:account-multiple{% elif states('sensor.master_count')|int == 1 %}mdi:account{% else %}mdi:account-off{% endif %}"
       value_template: "{{ is_state('binary_sensor.presence_chris', 'on')|int + is_state('binary_sensor.presence_melissa', 'on')|int }}"
 
+    melissas_speed:
+      friendly_name: "Melissa's Speed"
+      value_template: "{{ state_attr('device_tracker.melissa_phone_gps', 'speed')|int }}"
+      unit_of_measurement: 'MPH'
+
 - platform: statistics
   name: Upstairs Bathroom Humidity
   entity_id: sensor.upstairs_bathroom_humidity
@@ -80,3 +85,4 @@
 - platform: version
 - platform: version
   source: docker
+

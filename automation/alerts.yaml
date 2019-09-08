@@ -17,11 +17,11 @@
   initial_state: 'on'
   trigger:
     - platform: numeric_state
-      entity_id: sensor.garage_freezer_temperature
+      entity_id: sensor.garage_freezer_temp
       above: 25
       for: '00:10:00'
     - platform: numeric_state
-      entity_id: sensor.garage_freezer_temperature
+      entity_id: sensor.garage_freezer_temp
       above: 32
   action:
     - service: notify.html5_chris_pixel_3
@@ -35,11 +35,11 @@
   initial_state: 'on'
   trigger:
     - platform: numeric_state
-      entity_id: sensor.garage_fridge_temperature
+      entity_id: sensor.garage_fridge_rolling_average_temperature
       above: 40
     - platform: numeric_state
-      entity_id: sensor.garage_fridge_temperature
-      below: 34
+      entity_id: sensor.garage_fridge_rolling_average_temperature
+      below: 33.3
   action:
     - service: notify.html5_chris_pixel_3
       data_template:
@@ -55,14 +55,14 @@
       entity_id: 
         - binary_sensor.garage_fridge_status
         - binary_sensor.master_bed_status
-        - binary_sensor.patio_lights_status
+        # - binary_sensor.patio_lights_status
       to: 'off'
       for: "00:00:30"
   action:
     - service: notify.html5_chris_pixel_3
       data_template:
-        title: "{{ trigger.state.name }}"
-        message: "{{ trigger.state.name }} is offline"
+        title: "{{ trigger.to_state.name }}"
+        message: "{{ trigger.to_state.name }} is offline"
 
 
 - id: time_to_upgrade
@@ -77,3 +77,27 @@
       data_template:
         title: "Time to Upgrade Home Assistant!"
         message: 'The current version is {{ states("sensor.current_version") }} and the latest version is {{ states("sensor.latest_version") }}'
+
+
+- id: melissa_coming_home
+  alias: "Melissa is Coming Home"
+  initial_state: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: device_tracker.melissa_phone_gps
+        state: 'not_home'
+      - condition: state
+        entity_id: binary_sensor.presence_chris
+        state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.melissas_speed
+      above: 15
+  action:
+    - service: notify.html5_chris_pixel_3
+      data_template:
+        title: "Melissa"
+        message: "Melissa is on her way home??"
+  

@@ -26,4 +26,4 @@
         entity_id: cover.main_garage_door
     - service: notify.html5_chris_pixel_3
       data_template:
-        message: "Opening the garage door at {{now()}}"
+        message: "Garage door opened by {{ trigger.to_state.name }}"

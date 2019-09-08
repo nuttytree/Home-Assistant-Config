@@ -3,3 +3,13 @@
   vapid_pub_key: !secret google_vapid_pub_key
   vapid_prv_key: !secret google_vapid_prv_key
   vapid_email: !secret google_email
+
+
+- platform: nfandroidtv
+  name: "Basement TV"
+  host: 192.168.20.120
+
+
+- platform: nfandroidtv
+  name: "Master Bedroom TV"
+  host: 192.168.20.141
