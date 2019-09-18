@@ -62,6 +62,7 @@ views:
         entities:
           - calendar.nussbaum_family_calendar
         name: Family Calendar
+        startFromToday: true
         numberOfDays: 30
         showLocation: true
         timeFormat: h:mm a
@@ -237,6 +238,7 @@ views:
           - light.deck
           - light.back
           - light.gazebo
+          - light.pool_lights
           - switch.patio_lights
           - switch.bird_bath
           - switch.fountain

@@ -11,7 +11,7 @@
       entity_id: light.upstairs_bathroom_vanity
       state: 'off'
     - condition: template
-      value_template: '{{ state_attr("sensor.upstairs_bathroom_luminance_mean", "min_value")|float < 10 }}'
+      value_template: '{{ state_attr("sensor.upstairs_bathroom_luminance_statistics", "min_value")|float < 10 }}'
   trigger:
   - platform: state 
     entity_id: binary_sensor.upstairs_bathroom_motion

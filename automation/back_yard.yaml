@@ -20,7 +20,35 @@
     - service: homeassistant.turn_on
       entity_id:
         - switch.patio_lights
+    - service: light.turn_on
+      data:
+        entity_id: light.pool_lights
+        effect: Blue
 
+
+- id: pool_lights_double_tap_up
+  alias: "Pool Lights Double Tap Up"
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.pool_lights_double_tap_up
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.patio_lights
+
+
+- id: pool_lights_double_tap_down
+  alias: "Pool Lights Double Tap Down"
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.pool_lights_double_tap_down
+      to: 'on'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.patio_lights
+      
 
 - id: fountain_bird_bath_for_pool_party
   alias: 'Fountain and Bird Bath for Pool Party'
@@ -62,7 +90,7 @@
         - light.back
         - light.deck
         - light.gazebo
-    - service: switch.turn_on
+    - service: light.turn_on
       entity_id:
-        - switch.pool_lights
+        - light.pool_lights
 
