@@ -92,6 +92,11 @@ views:
           - switch.pool_fill_valve
           - switch.pool_drain_valve
           - switch.patio_lights
+          - switch.smartthings_patio_lights_outlet
+          - light.dimmer_in_family_room
+          - switch.pool_heater
+          - switch.pool_pump
+          - switch.pool_cleaner
   - title: Ground Floor
     icon: 'mdi:home-floor-g'
     path: main_floor_view
@@ -99,8 +104,8 @@ views:
       - title: Kitchen
         type: entities
         entities:
-          # - switch.coffee_maker
-          # - switch.coffee_maker_bold_setting
+          - switch.coffee_maker
+          - switch.coffee_maker_bold_setting
           - binary_sensor.oven
         show_header_toggle: false
       - title: Family Room
@@ -325,6 +330,7 @@ views:
         entities:
           - sensor.current_version
           - sensor.latest_version
+          - sensor.hacs
           - sensor.load_1m
           - sensor.load_5m
           - sensor.load_15m

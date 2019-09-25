@@ -8,6 +8,7 @@ on_when_gone:
   - switch.pool_heater
   - switch.pool_fill_valve
   - switch.pool_drain_valve
+  - switch.smartthings_patio_lights_outlet
 
 on_at_night:
   name: Devices Left On At Night
@@ -20,3 +21,4 @@ on_at_night:
   - switch.pool_heater
   - switch.pool_fill_valve
   - switch.pool_drain_valve
+  - switch.smartthings_patio_lights_outlet

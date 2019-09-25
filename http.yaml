@@ -1,2 +1,5 @@
 base_url: !secret url_base
+use_x_forwarded_for: true
+trusted_proxies: 
+  - !secret proxy_server
 ip_ban_enabled: true

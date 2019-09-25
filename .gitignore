@@ -21,6 +21,7 @@
 .storage
 .vscode
 ssl
+tensorflow
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 google_calendars.yaml

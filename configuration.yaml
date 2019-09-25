@@ -9,6 +9,8 @@ homeassistant:
   auth_providers:
    - type: homeassistant
 
+image_processing: !include image_processing.yaml
+
 alexa: !include alexa.yaml
 
 alexa_media: !include alexa_media.yaml
@@ -74,8 +76,8 @@ light: !include lights.yaml
 
 logbook:
 
-#logger:
-#  default: debug
+# logger:
+#   default: info
 
 lovelace:
   mode: yaml

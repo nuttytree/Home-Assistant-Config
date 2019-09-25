@@ -35,6 +35,8 @@ smart_home:
     - switch.family_room_echo_do_not_disturb_switch
     - switch.family_room_echo_repeat_switch
     - switch.family_room_echo_shuffle_switch
+    - switch.smartthings_patio_lights_outlet
+    - light.dimmer_in_family_room
   entity_config:
     switch.basement_stair_lights:
       display_categories: LIGHT
