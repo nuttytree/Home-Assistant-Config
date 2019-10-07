@@ -8,35 +8,40 @@ smart_home:
     - script.script_start_melissas_car
     - script.script_start_chris_car
     exclude_entities:
-    - switch.basement_stair_lights_bottom
-    - switch.basement_stair_lights_top
-    - switch.master_bath_outlet_switch_2
-    - switch.upstairs_bathroom_fan_2
-    - light.ge_26933_smart_motion_dimmer_level_2
-    - light.maysons_switch
-    - light.maysons_outlet
-    - switch.smartstart_1695751
-    - switch.smartstart_706837
-    - switch.smartstart_90947
-    - switch.restart_master_bed
-    - switch.restart_patio_lights
     - switch.basement_echo_do_not_disturb_switch
     - switch.basement_echo_repeat_switch
     - switch.basement_echo_shuffle_switch
+    - switch.basement_stair_lights_bottom
+    - switch.basement_stair_lights_top
     - switch.bedroom_echo_do_not_disturb_switch
     - switch.bedroom_echo_repeat_switch
     - switch.bedroom_echo_shuffle_switch
-    - switch.living_room_echo_do_not_disturb_switch
-    - switch.living_room_echo_repeat_switch
-    - switch.living_room_echo_shuffle_switch
-    - switch.office_echo_do_not_disturb_switch
-    - switch.office_echo_repeat_switch
-    - switch.office_echo_shuffle_switch
     - switch.family_room_echo_do_not_disturb_switch
     - switch.family_room_echo_repeat_switch
     - switch.family_room_echo_shuffle_switch
+    - switch.living_room_echo_do_not_disturb_switch
+    - switch.living_room_echo_repeat_switch
+    - switch.living_room_echo_shuffle_switch
+    - switch.master_bath_outlet_switch_2
+    - switch.office_echo_do_not_disturb_switch
+    - switch.office_echo_repeat_switch
+    - switch.office_echo_shuffle_switch
+    - switch.pool_drain_valve
+    - switch.pool_fill_valve
+    - switch.restart_coffee_maker
+    - switch.restart_garage_fridge
+    - switch.restart_master_bed
+    - switch.restart_patio_lights
+    - switch.restart_pool_lights
+    - switch.smartstart_90947
+    - switch.smartstart_706837
+    - switch.smartstart_1695751
     - switch.smartthings_patio_lights_outlet
+    - switch.upstairs_bathroom_fan_2
     - light.dimmer_in_family_room
+    - light.ge_26933_smart_motion_dimmer_level_2
+    - light.maysons_switch
+    - light.maysons_outlet
   entity_config:
     switch.basement_stair_lights:
       display_categories: LIGHT

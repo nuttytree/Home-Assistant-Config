@@ -77,27 +77,3 @@
       data_template:
         title: "Time to Upgrade Home Assistant!"
         message: 'The current version is {{ states("sensor.current_version") }} and the latest version is {{ states("sensor.latest_version") }}'
-
-
-- id: melissa_coming_home
-  alias: "Melissa is Coming Home"
-  initial_state: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: device_tracker.melissa_phone_gps
-        state: 'not_home'
-      - condition: state
-        entity_id: binary_sensor.presence_chris
-        state: 'on'
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.melissas_speed
-      above: 15
-  action:
-    - service: notify.html5_chris_pixel_3
-      data_template:
-        title: "Melissa"
-        message: "Melissa is on her way home??"
-  

@@ -58,3 +58,39 @@
     entity_id: cover.main_garage_door
 
 
+- id: track_g35_with_chris_phone
+  alias: Track G35 with Chris' Phone
+  condition:
+    - condition: state
+      entity_id: binary_sensor.chris_phone_connected_to_g35
+      state: 'on'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.chris_phone_gps
+  action:
+    - service: device_tracker.see
+      data_template:
+        dev_id: "smartstart_706837"
+        location_name: "{{ trigger.to_state.state }}"
+        gps:
+          - "{{ trigger.to_state.attributes['latitude'] }}"
+          - "{{ trigger.to_state.attributes['longitude'] }}"
+
+
+- id: track_suburban_with_chris_phone
+  alias: Track Suburban with Chris' Phone
+  condition:
+    - condition: state
+      entity_id: binary_sensor.chris_phone_connected_to_suburban
+      state: 'on'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.chris_phone_gps
+  action:
+    - service: device_tracker.see
+      data_template:
+        dev_id: "smartstart_1695751"
+        location_name: "{{ trigger.to_state.state }}"
+        gps:
+          - "{{ trigger.to_state.attributes['latitude'] }}"
+          - "{{ trigger.to_state.attributes['longitude'] }}"

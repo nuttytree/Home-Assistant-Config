@@ -65,6 +65,7 @@ views:
         startFromToday: true
         numberOfDays: 30
         showLocation: true
+        highlightToday: true
         timeFormat: h:mm a
       - entity: weather.dark_sky
         name: Weather
@@ -324,7 +325,7 @@ views:
     icon: 'mdi:server'
     path: system_view
     cards:
-      - title: System
+      - title: Home Assistant
         type: entities
         show_header_toggle: false
         entities:
@@ -336,4 +337,13 @@ views:
           - sensor.load_15m
           - sensor.memory_use_percent
           - sensor.disk_use_percent
+      - title: ESPHome
+        type: entities
+        show_header_toggle: false
+        entities:
+          - binary_sensor.master_bed_status
+          - binary_sensor.pool_lights_status
+          - binary_sensor.patio_lights_status
+          - binary_sensor.coffee_maker_status
+          - binary_sensor.garage_fridge_status
   - !include /config/lovelace/kitchen_tablet.yaml
