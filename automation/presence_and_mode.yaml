@@ -94,3 +94,22 @@
         gps:
           - "{{ trigger.to_state.attributes['latitude'] }}"
           - "{{ trigger.to_state.attributes['longitude'] }}"
+
+
+- id: track_mkx_with_melissa_phone
+  alias: Track MKX with Melissa's Phone
+  condition:
+    - condition: state
+      entity_id: binary_sensor.melissa_phone_connected_to_mkx
+      state: 'on'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.melissa_phone_gps
+  action:
+    - service: device_tracker.see
+      data_template:
+        dev_id: "smartstart_90947"
+        location_name: "{{ trigger.to_state.state }}"
+        gps:
+          - "{{ trigger.to_state.attributes['latitude'] }}"
+          - "{{ trigger.to_state.attributes['longitude'] }}"
