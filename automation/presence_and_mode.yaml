@@ -113,3 +113,25 @@
         gps:
           - "{{ trigger.to_state.attributes['latitude'] }}"
           - "{{ trigger.to_state.attributes['longitude'] }}"
+
+
+- id: turn_on_guard_mode
+  alias: Turn On Alexa Guard Mode
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.home_away
+      to: 'off'
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.alexa_guard_cc675
+
+
+- id: turn_off_guard_mode
+  alias: Turn Off Alexa Guard Mode
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.home_away
+      to: 'on'
+  action:
+    - service: alarm_control_panel.alarm_arm_home
+      entity_id: alarm_control_panel.alexa_guard_cc675

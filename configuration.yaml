@@ -11,6 +11,8 @@ homeassistant:
 
 image_processing: !include image_processing.yaml
 
+alert: !include alerts.yaml
+
 alexa: !include alexa.yaml
 
 alexa_media: !include alexa_media.yaml
@@ -76,15 +78,15 @@ light: !include lights.yaml
 
 logbook:
 
-# logger:
-#   default: info
+logger:
+  default: info
+  logs:
+    alexa_media.helpers: debug
 
 lovelace:
   mode: yaml
 
 map:
-
-media_player: !include media_players.yaml
 
 # mqtt: !include mqtt.yaml
     

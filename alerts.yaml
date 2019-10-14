@@ -1,0 +1,114 @@
+garage_fridge_temp:
+  name: Garage Fridge Temperature Alert
+  title: Garage Fridge Temperature Alert!
+  entity_id: binary_sensor.garage_fridge_temp_alert
+  message: "Garage fridge temperature is {{ states('sensor.garage_fridge_temp') }} °F"
+  skip_first: true
+  repeat:
+    - 1
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/garage_view
+  notifiers:
+    html5_chris_pixel_3
+
+
+garage_freezer_temp:
+  name: Garage Freezer Temperature Alert
+  title: Garage Freezer Temperature Alert!
+  entity_id: binary_sensor.garage_freezer_temp_alert
+  message: "Garage freezer temperature is {{ states('sensor.garage_freezer_temp') }} °F"
+  skip_first: true
+  repeat:
+    - 1
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/garage_view
+  notifiers:
+    html5_chris_pixel_3
+
+
+storage_space_low:
+  name: Storage Space is Low
+  title: Storage Space is Low!
+  entity_id: binary_sensor.storage_alert
+  message: "Disk usage is at {{ trigger.to_state.state }}%"
+  repeat:
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+  notifiers:
+    html5_chris_pixel_3
+
+
+time_to_upgrade:
+  name: Time to Upgrade Home Assistant
+  title: Time to Upgrade Home Assistant!
+  entity_id: binary_sensor.time_to_upgrade
+  message: 'The current version is {{ states("sensor.current_version") }} and the latest version is {{ states("sensor.latest_version") }}'
+  repeat: 1440
+  notifiers:
+    html5_chris_pixel_3
+
+
+garage_fridge_offline:
+  name: Garage Fridge Offline
+  title: Garage Fridge
+  entity_id: binary_sensor.garage_fridge_status
+  state: off
+  message: The Gararage Fridge is Offline!
+  done_message: The Gararage Fridge is back Online!
+  skip_first: true
+  repeat:
+    - 1
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+  notifiers:
+    html5_chris_pixel_3
+
+
+master_bed_offline:
+  name: Master Bed Offline
+  title: Master Bed
+  entity_id: binary_sensor.master_bed_status
+  state: off
+  message: The Master Bed is Offline!
+  done_message: The Master Bed is back Online!
+  skip_first: true
+  repeat:
+    - 1
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+  notifiers:
+    html5_chris_pixel_3
+
+
+patio_lights_offline:
+  name: Patio Lights Offline
+  title: Patio Lights
+  entity_id: binary_sensor.patio_lights_status
+  state: off
+  message: The Patio Lights are Offline!
+  done_message: The Patio Lights are back Online!
+  skip_first: true
+  repeat:
+    - 1
+    - 15
+    - 30
+    - 60
+  data:
+    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+  notifiers:
+    html5_chris_pixel_3

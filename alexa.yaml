@@ -5,6 +5,7 @@ smart_home:
     - light
     - climate
     include_entities:
+    - script.script_close_main_garage_door
     - script.script_start_melissas_car
     - script.script_start_chris_car
     exclude_entities:

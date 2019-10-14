@@ -73,3 +73,18 @@
       entity_id: sensor.current_version, sensor.latest_version
       icon_template: mdi:package-up
       value_template: '{{ states("sensor.latest_version").split(".")[1] | int - states("sensor.current_version").split(".")[1] | int > 1 }}'
+
+    garage_fridge_temp_alert:
+      friendly_name: "Garage Fridge Temperature Alert"
+      entity_id: sensor.garage_fridge_rolling_average_temperature
+      value_template: '{{ states("sensor.garage_fridge_rolling_average_temperature") | int < 33 or states("sensor.garage_fridge_rolling_average_temperature") | int > 42}}'
+
+    garage_freezer_temp_alert:
+      friendly_name: "Garage Freezer Temperature Alert"
+      entity_id: sensor.garage_freezer_temp
+      value_template: '{{ states("sensor.garage_freezer_temp") | int > 32}}'
+
+    storage_alert:
+      friendly_name: Storage Space is Low
+      entity_id: sensor.disk_use_percent
+      value_template: '{{ states("sensor.disk_use_percent") | int > 80}}'

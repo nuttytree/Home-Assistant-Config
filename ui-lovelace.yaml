@@ -347,3 +347,11 @@ views:
           - binary_sensor.coffee_maker_status
           - binary_sensor.garage_fridge_status
   - !include /config/lovelace/kitchen_tablet.yaml
+  - title: Experiment
+    icon: 'mdi:beaker'
+    cards:
+      - title: test light
+        type: glance
+        entities: 
+          - light.back
+          - switch.garage_lights
