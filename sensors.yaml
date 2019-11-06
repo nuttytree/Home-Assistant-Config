@@ -86,3 +86,5 @@
 - platform: version
   source: docker
 
+- platform: cert_expiry
+  host: !secret url_host

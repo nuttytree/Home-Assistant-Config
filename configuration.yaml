@@ -88,6 +88,8 @@ lovelace:
 
 map:
 
+mobile_app:
+
 # mqtt: !include mqtt.yaml
     
 nest:
@@ -96,6 +98,7 @@ nest:
 
 notify: !include notifiers.yaml
 
+python_script:
 recorder:
   db_url: !secret recorder_db_url
 

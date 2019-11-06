@@ -6,10 +6,24 @@
 
 
 - platform: nfandroidtv
-  name: "Basement TV"
-  host: 192.168.20.120
+  name: Family Room TV
+  host: 192.168.20.130
+  fontsize: max
+  color: red
+  transparency: 50%
 
 
 - platform: nfandroidtv
-  name: "Master Bedroom TV"
+  name: Basement TV
+  host: 192.168.20.120
+  fontsize: max
+  color: red
+  transparency: 50%
+
+
+- platform: nfandroidtv
+  name: Master Bedroom TV
   host: 192.168.20.141
+  fontsize: max
+  color: red
+  transparency: 50%

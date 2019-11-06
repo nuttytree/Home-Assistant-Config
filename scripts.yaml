@@ -46,3 +46,7 @@ script_close_main_garage_door:
   - data:
       entity_id: cover.main_garage_door
     service: cover.close_cover
+shutdown_basement_tv:
+  alias: Script - Shutdown Basement TV
+  sequence:
+  - service: python_script.shutdown_basement_tv

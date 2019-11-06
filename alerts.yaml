@@ -61,7 +61,7 @@ garage_fridge_offline:
   name: Garage Fridge Offline
   title: Garage Fridge
   entity_id: binary_sensor.garage_fridge_status
-  state: off
+  state: "off"
   message: The Gararage Fridge is Offline!
   done_message: The Gararage Fridge is back Online!
   skip_first: true
@@ -80,7 +80,7 @@ master_bed_offline:
   name: Master Bed Offline
   title: Master Bed
   entity_id: binary_sensor.master_bed_status
-  state: off
+  state: "off"
   message: The Master Bed is Offline!
   done_message: The Master Bed is back Online!
   skip_first: true
@@ -99,7 +99,7 @@ patio_lights_offline:
   name: Patio Lights Offline
   title: Patio Lights
   entity_id: binary_sensor.patio_lights_status
-  state: off
+  state: "off"
   message: The Patio Lights are Offline!
   done_message: The Patio Lights are back Online!
   skip_first: true

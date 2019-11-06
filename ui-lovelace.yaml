@@ -66,6 +66,7 @@ views:
         numberOfDays: 30
         showLocation: true
         highlightToday: true
+        hidePastEvents: true
         timeFormat: h:mm a
       - entity: weather.dark_sky
         name: Weather
@@ -331,6 +332,7 @@ views:
         entities:
           - sensor.current_version
           - sensor.latest_version
+          - sensor.ssl_certificate_expiry
           - sensor.hacs
           - sensor.load_1m
           - sensor.load_5m
