@@ -77,7 +77,7 @@
     value_template: '{{ states.sensor.master_bath_humidity.state|float > (states.sensor.master_bath_humidity_median.state|float + 5) }}'
   action:
   - service: switch.turn_on
-    entity_id: switch.master_bath_fan
+    entity_id: switch.master_bathroom_fan
 
 
 - id: master_bath_fan_off
@@ -91,7 +91,7 @@
   - platform: template
     value_template: '{{ states.sensor.master_bath_humidity.state|float < (states.sensor.master_bath_humidity_median.state|float + 5) }}'
   - platform: state
-    entity_id: switch.master_bath_fan
+    entity_id: switch.master_bathroom_fan
     to: 'on'
     for: '00:08:00'
   condition:
@@ -105,6 +105,6 @@
       value_template: '{{ states.sensor.master_bath_humidity.state|float < (states.sensor.master_bath_humidity_median.state|float + 5) }}'
   action:
   - service: switch.turn_off
-    entity_id: switch.master_bath_fan
+    entity_id: switch.master_bathroom_fan
 
 

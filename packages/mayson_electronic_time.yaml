@@ -1,0 +1,194 @@
+var:
+  mayson_allowed_electronics:
+    friendly_name: Mayson is Allowed Electronics
+    icon: 'mdi:check-bold'
+
+  mayson_time_based_is_allowed_electronics:
+
+  mayson_remaining_electronic_time:
+    friendly_name: Mayson's Remaining Electronics Time
+    unit_of_measurement: minutes
+    icon: 'mdi:av-timer'
+
+  mayson_on_computer:
+
+  mayson_on_tv:
+
+
+binary_sensor:
+  - platform: template
+    sensors:
+      mayson_can_use_electronics:
+        value_template: "{{ states('var.mayson_allowed_electronics') == 'Yes' and states('var.mayson_time_based_is_allowed_electronics')|int == 1 and states('var.mayson_remaining_electronic_time')|int > 0 }}"
+
+
+input_boolean:
+  mayson_update_allowed_electronics:
+    name: Update Mayson is Allowed Electronics
+    icon: 'mdi:check-bold'
+
+  pin_1:
+    name: 1
+  pin_2:
+    name: 2
+  pin_3:
+    name: 3
+  pin_4:
+    name: 4
+  pin_5:
+    name: 5
+  pin_6:
+    name: 6
+  pin_7:
+    name: 7
+  pin_8:
+    name: 8
+  pin_9:
+    name: 9
+  pin_0:
+    name: 0
+
+
+input_number:
+  mayson_update_remaining_electronic_time:
+    name: Add/Remove Minutes
+    icon: 'mdi:av-timer'
+    initial: 0
+    min: -60
+    max: 60
+    step: 1
+    mode: box
+    unit_of_measurement: minutes
+
+
+input_text:
+  mayson_electronic_time_update_pin:
+    name: Enter PIN
+    min: 0
+    max: 4
+    initial: ""
+    icon: 'mdi:textbox-password'
+    pattern: '[0-9]{0-4}'
+    mode: password
+
+
+script:
+  update_mayson_electronics_time:
+    alias: Update Mayson's Electronics Time
+    sequence:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_text.mayson_electronic_time_update_pin
+          state: '3867'
+        - condition: state
+          entity_id: input_text.mayson_electronic_time_update_pin
+          state: '1234'
+    - service: input_text.set_value
+      entity_id: input_text.mayson_electronic_time_update_pin
+      data:
+        value: ""
+    - service: var.set
+      entity_id: var.mayson_remaining_electronic_time
+      data_template:
+        value: >
+          {% if (states('var.mayson_remaining_electronic_time')|int + states('input_number.mayson_update_remaining_electronic_time')|int) < -60 %}
+            -60
+          {% else %}
+            {{ states('var.mayson_remaining_electronic_time')|int + states('input_number.mayson_update_remaining_electronic_time')|int }}
+          {% endif %}
+    - service: input_number.set_value
+      entity_id: input_number.mayson_update_remaining_electronic_time
+      data:
+        value: 0
+    - service: var.set
+      entity_id: var.mayson_allowed_electronics
+      data_template:
+        value: >
+          {% if states('input_boolean.mayson_update_allowed_electronics') == 'on' %}
+            Yes
+          {% else %}
+            No
+          {% endif %}
+
+  mayson_update_electronics_time_when_on_tablet:
+    alias: Update Mayson's Electronics Time When on Tablet
+    sequence:
+    - service: var.set
+      entity_id: var.mayson_remaining_electronic_time
+      data_template:
+        value: >
+          {% if (states('var.mayson_remaining_electronic_time')|int - 2) < 0 %}
+            0
+          {% else %}
+            {{ states('var.mayson_remaining_electronic_time')|int - 2 }}
+          {% endif %}
+
+
+automation:
+  - id: mayson_disable_electronics_at_night
+    alias: Disable Mayson's Electronics at Night
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.mayson_in_bed
+        to: 'on'
+    action:
+      - service: var.set
+        entity_id: var.mayson_time_based_is_allowed_electronics
+        data:
+          value: 0
+
+  - id: mayson_enable_electronics_in_the_morning
+    alias: Enable Mayson's Electronics in the Morning
+    initial_state: 'on'
+    trigger:
+      - platform: time
+        at: '07:00:00'
+    action:
+      - service: var.set
+        entity_id: var.mayson_time_based_is_allowed_electronics
+        data:
+          value: 1
+
+  - id: mayson_update_electronics_time_when_on_computer
+    alias: Update Mayson's Time When On The Computer
+    initial_state: 'on'
+    condition:
+      - condition: state
+        entity_id: var.mayson_on_computer
+        state: '1'
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+    action:
+      - service: var.set
+        entity_id: var.mayson_remaining_electronic_time
+        data_template:
+          value: >
+            {% if (states('var.mayson_remaining_electronic_time')|int - 1) < 0 %}
+              0
+            {% else %}
+              {{ states('var.mayson_remaining_electronic_time')|int - 1 }}
+            {% endif %}
+
+  - id: mayson_update_electronics_time_when_on_tv
+    alias: Update Mayson's Time When On The TV
+    initial_state: 'on'
+    condition:
+      - condition: state
+        entity_id: var.mayson_on_tv
+        state: '1'
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+    action:
+      - service: var.set
+        entity_id: var.mayson_remaining_electronic_time
+        data_template:
+          value: >
+            {% if (states('var.mayson_remaining_electronic_time')|int - 1) < 0 %}
+              0
+            {% else %}
+              {{ states('var.mayson_remaining_electronic_time')|int - 1 }}
+            {% endif %}

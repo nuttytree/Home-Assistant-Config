@@ -1,21 +1,51 @@
 resources:
-  - type: js
-    url: 'https://unpkg.com/moment@2.22.2/moment.js'
-  - type: js
-    url: /local/custom-cards/popup-card.js
-  - type: js
-    url: /local/custom-cards/card-tools.js
+  - url: /local/custom-cards/card-tools.js
+    type: js
+  - url: /local/custom-cards/popup-card.js
+    type: js
   
-  - type: module
-    url: /community_plugin/calendar-card/calendar-card.js
-  - type: module
-    url: /community_plugin/simple-thermostat/simple-thermostat.js
-  - type: module
-    url: /community_plugin/swipe-card/swipe-card.js
-  - type: module
-    url: /local/custom-cards/group-card.js?v=1
-  - type: module
-    url: /local/custom-cards/groups-card.js?v=1
+  - url: /community_plugin/calendar-card/calendar-card.js
+    type: module
+  - url: /community_plugin/custom-header/custom-header.js
+    type: module
+  - url: /community_plugin/group-card/group-card.js
+    type: module
+  - url: /community_plugin/lovelace-auto-entities/auto-entities.js
+    type: module
+  - url: /community_plugin/lovelace-dummy-entity-row/dummy-entity-row.js
+    type: module
+  - url: /community_plugin/lovelace-gui-sandbox/gui-sandbox.js
+    type: module
+  - url: /community_plugin/lovelace-layout-card/layout-card.js
+    type: module
+  - url: /community_plugin/lovelace-slider-entity-row/slider-entity-row.js
+    type: module
+  - url: /community_plugin/lovelace-swipe-navigation/swipe-navigation.js
+    type: js
+  - url: /community_plugin/lovelace-template-entity-row/template-entity-row.js
+    type: module
+  - url: /community_plugin/simple-thermostat/simple-thermostat.js
+    type: module
+  - url: /community_plugin/swipe-card/swipe-card.js
+    type: module
+
+swipe_nav:
+  wrap: true
+  animate: swipe
+  prevent_default: true
+  swipe_amount: 15
+  
+custom_header:
+  exceptions:
+    - conditions:
+        user: "Kitchen Tablet"
+      config:
+        disable_sidebar: true
+        footer_mode: true
+        compact_mode: true
+        options_hide: true
+        default_tab: kitchen_home
+        show_tabs: 'kitchen_home, kitchen_lights, kitchen_map, kitchen_thermostat'
 
 title: The Nutty Home
 views:
@@ -58,10 +88,12 @@ views:
             hide: false
             snapOnRelease: true
           spaceBetween: 8
-      - type: 'custom:calendar-card'
+      - name: Family Calendar
+        type: 'custom:calendar-card'
         entities:
           - calendar.nussbaum_family_calendar
-        name: Family Calendar
+          - calendar.pack_342
+          - calendar.aqjt_competitive_prep
         startFromToday: true
         numberOfDays: 30
         showLocation: true
@@ -71,34 +103,134 @@ views:
       - entity: weather.dark_sky
         name: Weather
         type: weather-forecast
-      - card:
-          type: entity-filter
-          card:
-            show_header_toggle: false
-            title: What's Turned On
-            type: entities
-          entities:
-          state_filter:
-            - 'on'
-        type: 'custom:groups-card'
+      - type: custom:auto-entities
+        card:
+          title: What's On/Open
+          type: entities
+          show_header_toggle: false
+        show_empty: true
+        sort:
+          method: last_changed
+          reverse: true
+        filter:
+          include:
+            - domain: light
+              options:
+                type: custom:slider-entity-row
+                toggle: true
+                secondary_info: last-changed
+            - domain: switch
+              options:
+                secondary_info: last-changed
+            - domain: fan
+              options:
+                secondary_info: last-changed
+            - domain: cover
+              options:
+                secondary_info: last-changed
+          exclude:
+            - attributes:
+                hidden: true
+            - attributes:
+                type: browser_mod
+            - state: "off"
+            - state: "closed"
+            - state: "unavailable"
+            - entity_id: "*_do_not_disturb_switch"
+            - entity_id: "*_repeat_switch"
+            - entity_id: "*_shuffle_switch"
+            - entity_id: "*_bathroom_fan"
+            - entity_id: switch.basement_stair_lights
+            - entity_id: switch.pool_pump_new
+            - entity_id: switch.pool_cleaner_new
+            - entity_id: switch.pool_heater_new
+            - entity_id: switch.pool_fill_valve
+            - entity_id: switch.pool_drain_valve
+            - entity_id: switch.patio_lights
+            - entity_id: switch.smartthings_patio_lights_outlet
+            - entity_id: light.dimmer_in_family_room
+            - entity_id: switch.pool_heater
+            - entity_id: switch.pool_pump
+            - entity_id: switch.pool_cleaner
+            - entity_id: switch.coffee_maker_bold_setting
+            - entity_id: switch.neato_schedule
+  - title: Lights
+    icon: 'mdi:lightbulb'
+    path: lights
+    cards:
+      - title: Ground Floor
+        type: entities
         entities:
-          - binary_sensor.oven
-        groups:
-          - group.all_lights
-          - group.all_switches
-        exclude:
-          - switch.maysons_fan
-          - switch.pool_pump_new
-          - switch.pool_cleaner_new
-          - switch.pool_heater_new
-          - switch.pool_fill_valve
-          - switch.pool_drain_valve
-          - switch.patio_lights
-          - switch.smartthings_patio_lights_outlet
-          - light.dimmer_in_family_room
-          - switch.pool_heater
-          - switch.pool_pump
-          - switch.pool_cleaner
+          - name: Family Room
+            type: custom:slider-entity-row
+            entity: light.family_room_light
+            toggle: true
+          - name: Kitchen Table
+            type: custom:slider-entity-row
+            entity: light.kitchen_table_light
+            toggle: true
+      - title: Upstairs
+        type: entities
+        entities:
+          - name: Master Bath
+            type: custom:slider-entity-row
+            entity: light.master_bath
+            toggle: true
+          - name: Master Toilet
+            type: custom:slider-entity-row
+            entity: light.master_toilet
+            toggle: true
+          - name: Mayson's Room
+            type: custom:slider-entity-row
+            entity: light.maysons
+            toggle: true
+          - name: Guest Room
+            type: custom:slider-entity-row
+            entity: light.guest_bedroom
+            toggle: true
+          - name: Office
+            type: custom:slider-entity-row
+            entity: light.office_light
+            toggle: true
+      - title: Basement
+        type: entities
+        entities:
+          - name: TV
+            type: custom:slider-entity-row
+            entity: light.basement_tv
+            toggle: true
+          - name: Main
+            type: custom:slider-entity-row
+            entity: light.basement
+            toggle: true
+          - name: Bar
+            type: custom:slider-entity-row
+            entity: light.bar
+            toggle: true
+          - name: Pool Table
+            entity: switch.pool_table_light
+      - title: Outside
+        type: entities
+        entities:
+          - name: Front
+            entity: switch.front_lights
+          - name: Deck
+            type: custom:slider-entity-row
+            entity: light.deck
+            toggle: true
+          - name: Back
+            type: custom:slider-entity-row
+            entity: light.back
+            toggle: true
+          - name: Gazebo
+            type: custom:slider-entity-row
+            entity: light.gazebo
+            toggle: true
+      - title: Garage
+        type: entities
+        entities:
+          - name: Garage
+            entity: switch.garage_lights
   - title: Ground Floor
     icon: 'mdi:home-floor-g'
     path: main_floor_view
@@ -106,43 +238,25 @@ views:
       - title: Kitchen
         type: entities
         entities:
+          - light.kitchen_table_light
           - switch.coffee_maker
           - switch.coffee_maker_bold_setting
-          - binary_sensor.oven
         show_header_toggle: false
       - title: Family Room
         type: entities
         entities:
           # - switch.computer_light
-          - switch.family_room_tv
-      - entity: media_player.family_room_echo
-        type: media-control
-      - entity: media_player.living_room_echo
-        type: media-control
-      - title: Laundry Room
-        type: entities
-        entities:
-          - binary_sensor.washing_machine
-          - binary_sensor.dryer
-        show_header_toggle: false
+          - light.family_room_light
   - title: Upstairs
     icon: mdi:home-floor-2
     path: upstairs_view
     cards:
-      - title: Upstairs Hall
+      - title: Master Bathroom
         type: entities
         entities:
-          # - light.upstairs_hall
-          - binary_sensor.upstairs_hall_motion
-          - sensor.upstairs_nest_protect_smoke_status
-          - sensor.upstairs_nest_protect_co_status
-          - sensor.upstairs_nest_protect_battery_health
-          - binary_sensor.upstairs_nest_protect_online
-        show_header_toggle: false
-      - entities:
           - light.master_bath
           - light.master_toilet
-          - switch.master_bath_fan
+          - switch.master_bathroom_fan
           - switch.master_bath_outlet
           # - binary_sensor.whirlpool
           - sensor.master_bath_humidity
@@ -150,9 +264,13 @@ views:
           - sensor.master_bath_luminance
           - binary_sensor.master_bath_motion
           - sensor.master_bath_battery
-        title: Master Bathroom
+      - title: Office
         type: entities
-      - entities:
+        entities:
+          - light.office_light
+      - title: Upstairs Bathroom
+        type: entities
+        entities:
           - light.upstairs_bathroom_main
           - light.upstairs_bathroom_vanity
           - switch.upstairs_bathroom_fan
@@ -161,20 +279,18 @@ views:
           - sensor.upstairs_bathroom_luminance
           - binary_sensor.upstairs_bathroom_motion
           - sensor.upstairs_bathroom_battery
-        title: Upstairs Bathroom
+      - title: Mayson's Bedroom
         type: entities
-      - entities:
+        entities:
           - light.maysons
           - switch.maysons_fan
           - binary_sensor.maysons_motion
           - sensor.maysons_luminance
           - sensor.maysons_battery
-        title: Mayson's Bedroom
+      - title: Guest Bedroom
         type: entities
-      - entities:
+        entities:
           - light.guest_bedroom
-        title: Guest Bedroom
-        type: entities
   - title: Basement
     icon: 'mdi:home-floor-b'
     path: basement_view
@@ -189,14 +305,6 @@ views:
           - switch.xbox
         title: Basement
         type: entities
-      - entities:
-          - sensor.basement_nest_protect_smoke_status
-          - sensor.basement_nest_protect_co_status
-          - sensor.basement_nest_protect_battery_health
-          - binary_sensor.basement_nest_protect_online
-        title: Basement Nest Protect
-        type: entities
-        show_header_toggle: false
   - title: Garage
     icon: 'mdi:garage'
     path: garage_view
@@ -245,7 +353,6 @@ views:
           - light.deck
           - light.back
           - light.gazebo
-          - light.pool_lights
           - switch.patio_lights
           - switch.bird_bath
           - switch.fountain
@@ -310,18 +417,6 @@ views:
           - binary_sensor.master_bed_chris
           - binary_sensor.master_bed_melissa
           - sensor.master_bed_count
-  - title: Energy
-    icon: 'mdi:flash'
-    path: energy_view
-    cards:
-      - entities:
-          - sensor.energy_usage
-          - sensor.daily_usage
-          - sensor.weekly_usage
-          - sensor.monthly_usage
-        title: Energy Usage
-        type: entities
-        show_header_toggle: false
   - title: System
     icon: 'mdi:server'
     path: system_view
@@ -339,16 +434,35 @@ views:
           - sensor.load_15m
           - sensor.memory_use_percent
           - sensor.disk_use_percent
-      - title: ESPHome
+      - name: Devices
+        type: custom:auto-entities
+        card:
+          title: Devices
+          type: entities
+          show_header_toggle: false
+        sort:
+          method: name
+        filter:
+          include:
+            - domain: binary_sensor
+              attributes:
+                device_class: connectivity
+      - name: Lovelace Sandbox
+        type: custom:gui-sandbox
+  - !include /config/lovelace/kitchen_tablet.yaml
+  - title: Mayson's Electronics Time
+    icon: 'mdi:av-timer'
+    cards:
+      - title: Mayson's Electronics Time
         type: entities
         show_header_toggle: false
         entities:
-          - binary_sensor.master_bed_status
-          - binary_sensor.pool_lights_status
-          - binary_sensor.patio_lights_status
-          - binary_sensor.coffee_maker_status
-          - binary_sensor.garage_fridge_status
-  - !include /config/lovelace/kitchen_tablet.yaml
+          - var.mayson_allowed_electronics
+          - var.mayson_remaining_electronic_time
+          - input_boolean.mayson_update_allowed_electronics
+          - input_number.mayson_update_remaining_electronic_time
+          - input_text.mayson_electronic_time_update_pin
+          - script.update_mayson_electronics_time
   - title: Experiment
     icon: 'mdi:beaker'
     cards:
@@ -357,3 +471,264 @@ views:
         entities: 
           - light.back
           - switch.garage_lights
+  - title: Kitchen Tablet Home
+    icon: 'mdi:home'
+    panel: true
+    path: kitchen_home
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:
+          - name: Weather
+            type: weather-forecast
+            entity: weather.dark_sky
+          - title: Family Calendar
+            type: 'custom:calendar-card'
+            entities:
+              - calendar.nussbaum_family_calendar
+              - calendar.pack_342
+              - calendar.aqjt_competitive_prep
+            startFromToday: true
+            numberOfDays: 30
+            showLocation: false
+            showLocationIcon: true
+            highlightToday: true
+            hidePastEvents: true
+            timeFormat: h:mm a
+          - break
+          - type: custom:auto-entities
+            card:
+              title: What's On/Open
+              type: entities
+              show_header_toggle: false
+            show_empty: true
+            sort:
+              method: last_changed
+              reverse: true
+            filter:
+              include:
+                - domain: light
+                  options:
+                    type: custom:slider-entity-row
+                    toggle: true
+                    secondary_info: last-changed
+                - domain: switch
+                  options:
+                    secondary_info: last-changed
+                - domain: fan
+                  options:
+                    secondary_info: last-changed
+                - domain: cover
+                  options:
+                    secondary_info: last-changed
+              exclude:
+                - attributes:
+                    hidden: true
+                - attributes:
+                    type: browser_mod
+                - state: "off"
+                - state: "closed"
+                - state: "unavailable"
+                - entity_id: "*_do_not_disturb_switch"
+                - entity_id: "*_repeat_switch"
+                - entity_id: "*_shuffle_switch"
+                - entity_id: "*_bathroom_fan"
+                - entity_id: switch.basement_stair_lights
+                - entity_id: switch.pool_pump_new
+                - entity_id: switch.pool_cleaner_new
+                - entity_id: switch.pool_heater_new
+                - entity_id: switch.pool_fill_valve
+                - entity_id: switch.pool_drain_valve
+                - entity_id: switch.patio_lights
+                - entity_id: switch.smartthings_patio_lights_outlet
+                - entity_id: light.dimmer_in_family_room
+                - entity_id: switch.pool_heater
+                - entity_id: switch.pool_pump
+                - entity_id: switch.pool_cleaner
+                - entity_id: switch.coffee_maker_bold_setting
+                - entity_id: switch.neato_schedule
+  - title: Kitchen Tablet Lights
+    icon: 'mdi:lightbulb'
+    panel: false
+    path: kitchen_lights
+    cards:
+      - title: Ground Floor
+        type: entities
+        entities:
+          - name: Family Room
+            type: custom:slider-entity-row
+            entity: light.family_room_light
+            toggle: true
+          - name: Kitchen Table
+            type: custom:slider-entity-row
+            entity: light.kitchen_table_light
+            toggle: true
+      - title: Upstairs
+        type: entities
+        entities:
+          - name: Master Bath
+            type: custom:slider-entity-row
+            entity: light.master_bath
+            toggle: true
+          - name: Master Toilet
+            type: custom:slider-entity-row
+            entity: light.master_toilet
+            toggle: true
+          - name: Mayson's Room
+            type: custom:slider-entity-row
+            entity: light.maysons
+            toggle: true
+          - name: Guest Room
+            type: custom:slider-entity-row
+            entity: light.guest_bedroom
+            toggle: true
+          - name: Office
+            type: custom:slider-entity-row
+            entity: light.office_light
+            toggle: true
+      - title: Basement
+        type: entities
+        entities:
+          - name: TV Area
+            type: custom:slider-entity-row
+            entity: light.basement_tv
+            toggle: true
+          - name: Main Area
+            type: custom:slider-entity-row
+            entity: light.basement
+            toggle: true
+          - name: Bar
+            type: custom:slider-entity-row
+            entity: light.bar
+            toggle: true
+          - name: Pool Table
+            entity: switch.pool_table_light
+          - name: Bathroom
+            entity: switch.basement_bathroom_light
+          - name: Shower
+            entity: switch.basement_shower_light
+      - title: Outside
+        type: entities
+        entities:
+          - name: Front
+            entity: switch.front_lights
+          - name: Deck
+            type: custom:slider-entity-row
+            entity: light.deck
+            toggle: true
+          - name: Back
+            type: custom:slider-entity-row
+            entity: light.back
+            toggle: true
+          - name: Gazebo
+            type: custom:slider-entity-row
+            entity: light.gazebo
+            toggle: true
+      - title: Garage
+        type: entities
+        entities:
+          - name: Garage
+            entity: switch.garage_lights
+  - title: Kitchen Tablet Map
+    icon: 'mdi:map-clock'
+    panel: true
+    path: kitchen_map
+    cards:
+      - type: custom:layout-card
+        layout: grid
+        min_columns: 2
+        max_columns: 2
+        cards:
+          - type: map
+            aspect_ratio: 16x5
+            gridcol: 1/3
+            gridrow: 1
+            entities:
+              - device_tracker.chris_phone_gps
+              - device_tracker.melissa_phone_gps
+              - zone.home
+              - zone.chris_work
+              - zone.melissa_s_work_office
+              - zone.melissa_s_work_southdale
+          - type: custom:auto-entities
+            card:
+              title: Chris
+              type: entities
+              show_header_toggle: false
+            gridcol: 1
+            gridrow: 2
+            show_empty: true
+            filter:
+              include:
+                - entity_id: sensor.chris_to_home
+                  options:
+                    name: Travel Time to Home
+                - entity_id: sensor.to_chris_office
+                  options:
+                    name: Travel Time to Work
+              exclude:
+                - state: "< 5"
+          - type: custom:auto-entities
+            card:
+              title: Melissa
+              type: entities
+              show_header_toggle: false
+            gridcol: 2
+            gridrow: 2
+            show_empty: true
+            filter:
+              include:
+                - entity_id: sensor.melissa_to_home
+                  options:
+                    name: Travel Time to Home
+                - entity_id: sensor.to_melissa_s_office
+                  options:
+                    name: Travel Time to Work
+                - entity_id: sensor.to_melissa_s_southdale_office
+                  options:
+                    name: Travel Time to Work (Southdale)
+              exclude:
+                - state: "< 5"
+  - title: Kitchen Tablet Thermostats
+    icon: mdi:thermostat
+    panel: true
+    path: kitchen_thermostat
+    cards:
+      - type: custom:layout-card
+        layout: grid
+        min_columns: 4
+        max_columns: 4
+        cards:
+          - name: Main Floor
+            type: 'custom:simple-thermostat'
+            entity: climate.lower
+            control:
+              hvac:
+                off: true
+                heat: true
+                cool: true
+                heat_cool: false
+            gridcol: 1/3
+            gridrow: 1
+          - name: Upstairs
+            type: 'custom:simple-thermostat'
+            entity: climate.upper
+            control:
+              hvac:
+                off: true
+                heat: true
+                cool: true
+                heat_cool: false
+            gridcol: 3/5
+            gridrow: 1
+          - name: Basement
+            type: 'custom:simple-thermostat'
+            entity: climate.basement
+            control:
+              hvac:
+                off: true
+                heat: true
+                cool: true
+                heat_cool: false
+            gridcol: 2/4
+            gridrow: 2

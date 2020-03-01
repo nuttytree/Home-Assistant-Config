@@ -1,0 +1,114 @@
+var:
+  next_appointment_name_60:
+
+  next_appointment_name_15:
+
+sensor:
+  - platform: template
+    sensors:
+      next_appointment_name:
+        friendly_name: "Next Appointment Name"
+        entity_id:
+          - calendar.nussbaum_family_calendar
+          - calendar.aqjt_competitive_prep
+          - calendar.pack_342
+        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.aqjt_competitive_prep', 'calendar.pack_342']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.message }}"
+
+      next_appointment_time:
+        friendly_name: "Next Appointment Time"
+        entity_id:
+          - calendar.nussbaum_family_calendar
+          - calendar.aqjt_competitive_prep
+          - calendar.pack_342
+        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.aqjt_competitive_prep', 'calendar.pack_342']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time }}"
+
+      next_appointment_location:
+        friendly_name: "Next Appointment Location"
+        entity_id:
+          - calendar.nussbaum_family_calendar
+          - calendar.aqjt_competitive_prep
+          - calendar.pack_342
+        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.aqjt_competitive_prep', 'calendar.pack_342']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.location }}"
+
+      next_appointment_leave_time:
+        friendly_name: "Next Appointment Leave Time"
+        entity_id:
+          - calendar.nussbaum_family_calendar
+          - calendar.aqjt_competitive_prep
+          - calendar.pack_342
+          - sensor.to_next_appointment
+        value_template: "{{ ((expand(['calendar.nussbaum_family_calendar', 'calendar.aqjt_competitive_prep', 'calendar.pack_342']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time | as_timestamp - (states('sensor.to_next_appointment') | int * 60) - 300) | timestamp_local }}"
+
+      next_appointment_minutes_till_leave_time:
+        friendly_name: "Next Appointment Leave Time"
+        entity_id:
+          - sensor.next_appointment_leave_time
+          - sensor.date_time
+        value_template: "{{ ((as_timestamp(states('sensor.next_appointment_leave_time')) - as_timestamp(strptime(states('sensor.date_time'), '%Y-%m-%d, %H:%M'))) / 60) | int }}"
+
+  - platform: waze_travel_time
+    name: To Next Appointment
+    origin: zone.home
+    destination: sensor.next_appointment_location
+    region: US
+
+automation:
+  - id: update_next_appointment_name
+    alias: Update Next Appointment Name
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.next_appointment_name
+    action:
+      - service: var.set
+        entity_id: var.next_appointment_name_60
+        data_template:
+          value: "{{ states('sensor.next_appointment_name') }}"
+      - service: var.set
+        entity_id: var.next_appointment_name_15
+        data_template:
+          value: "{{ states('sensor.next_appointment_name') }}"
+
+  - id: announce_next_appointment_60
+    alias: Announce Next Appointment 1 Hour Before
+    initial_state: 'on'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.next_appointment_name') == states('var.next_appointment_name_60') }}"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.next_appointment_minutes_till_leave_time
+        below: 61
+        above: 50
+    action:
+      - service: var.set
+        entity_id: var.next_appointment_name_60
+        data:
+          value: ""
+      - service: notify.alexa_media_everywhere
+        data_template:
+          message: "Just a friendly reminder, you need to leave for {{ states('sensor.next_appointment_name') }} in approximately 1 hour!"
+          data:
+            type: "announce"
+
+  - id: announce_next_appointment_15
+    alias: Announce Next Appointment 15 Minutes Before
+    initial_state: 'on'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.next_appointment_name') == states('var.next_appointment_name_15') }}"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.next_appointment_minutes_till_leave_time
+        below: 16
+        above: 1
+    action:
+      - service: var.set
+        entity_id: var.next_appointment_name_15
+        data:
+          value: ""
+      - service: notify.alexa_media_everywhere
+        data_template:
+          message: "Just a friendly reminder, you need to leave for {{ states('sensor.next_appointment_name') }} in {{ states('next_appointment_minutes_till_leave_time') }} minutes!"
+          data:
+            type: "announce"

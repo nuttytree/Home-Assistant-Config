@@ -88,3 +88,7 @@
       friendly_name: Storage Space is Low
       entity_id: sensor.disk_use_percent
       value_template: '{{ states("sensor.disk_use_percent") | int > 80}}'
+    
+    device_offline:
+      friendly_name: One or More Devices are Offline
+      value_template: "{{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length > 0 }}"

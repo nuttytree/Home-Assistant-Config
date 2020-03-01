@@ -26,3 +26,30 @@
       message: "The dryer is done running and ready to be unloaded!"
 
 
+- id: main_floor_vacuum_error
+  alias: Main Floor Vacuum Error
+  trigger:
+  - entity_id: vacuum.neato
+    platform: state
+    to: error
+  - entity_id: input_boolean.day_night
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: vacuum.neato
+    state: error
+  - condition: state
+    entity_id: input_boolean.day_night
+    state: 'on'
+  action:
+  - service: notify.alexa_media_everywhere
+    data_template:
+      message: >
+        {% if is_state_attr('vacuum.neato', 'status', 'Brush stuck') %} 
+          "Alert: The brush is stuck on the robo vac"
+        {% else %}
+          "Alert: something is wrong with the robo vac"
+        {% endif %}
+      data:
+        type: "announce"

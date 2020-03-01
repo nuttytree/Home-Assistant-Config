@@ -57,57 +57,24 @@ time_to_upgrade:
     html5_chris_pixel_3
 
 
-garage_fridge_offline:
-  name: Garage Fridge Offline
-  title: Garage Fridge
-  entity_id: binary_sensor.garage_fridge_status
-  state: "off"
-  message: The Gararage Fridge is Offline!
-  done_message: The Gararage Fridge is back Online!
+device_offline:
+  name: Device(s) Offline
+  title: "Device{% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length > 1 %}s{% endif %} Offline!"
+  entity_id: binary_sensor.device_offline
+  state: "on"
+  message: >
+    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length == 1 %}
+      The {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | first | replace(' Status', '')}} is offline
+    {% else %}
+      The following devices are offline: {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | list | join(', ') | replace(' Status', '')}}
+    {% endif %}
+  done_message: "All devices are back Online!"
   skip_first: true
   repeat:
-    - 1
-    - 15
+    - 2
     - 30
     - 60
-  data:
-    url: https://ha.nuttytree.dynu.net/lovelace/system_view
-  notifiers:
-    html5_chris_pixel_3
-
-
-master_bed_offline:
-  name: Master Bed Offline
-  title: Master Bed
-  entity_id: binary_sensor.master_bed_status
-  state: "off"
-  message: The Master Bed is Offline!
-  done_message: The Master Bed is back Online!
-  skip_first: true
-  repeat:
-    - 1
-    - 15
-    - 30
-    - 60
-  data:
-    url: https://ha.nuttytree.dynu.net/lovelace/system_view
-  notifiers:
-    html5_chris_pixel_3
-
-
-patio_lights_offline:
-  name: Patio Lights Offline
-  title: Patio Lights
-  entity_id: binary_sensor.patio_lights_status
-  state: "off"
-  message: The Patio Lights are Offline!
-  done_message: The Patio Lights are back Online!
-  skip_first: true
-  repeat:
-    - 1
-    - 15
-    - 30
-    - 60
+    - 240
   data:
     url: https://ha.nuttytree.dynu.net/lovelace/system_view
   notifiers:

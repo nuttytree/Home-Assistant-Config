@@ -7,7 +7,7 @@
 
 - platform: nfandroidtv
   name: Family Room TV
-  host: 192.168.20.130
+  host: !secret firetv_family_room_ip
   fontsize: max
   color: red
   transparency: 50%
@@ -15,7 +15,7 @@
 
 - platform: nfandroidtv
   name: Basement TV
-  host: 192.168.20.120
+  host: !secret firetv_basement_ip
   fontsize: max
   color: red
   transparency: 50%

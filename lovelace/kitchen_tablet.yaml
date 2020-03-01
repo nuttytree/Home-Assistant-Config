@@ -250,7 +250,7 @@ cards:
                   action: toggle
                 hold_action:
                   action: more-info
-              - entity: switch.master_bath_fan
+              - entity: switch.master_bathroom_fan
                 type: state-icon
                 style:
                   left: 63.9%

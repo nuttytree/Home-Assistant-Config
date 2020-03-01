@@ -13,20 +13,6 @@
         data:
           entity_id: switch.basement_stair_lights_top, switch.basement_stair_lights_bottom
 
-    family_room_tv:
-      friendly_name: 'Family Room TV'
-      value_template: "{{ is_state('remote.family_room_harmony_hub', 'on')}}"
-      icon_template: "mdi:television"
-      turn_on:
-        service: remote.turn_on
-        data:
-          entity_id: remote.family_room_harmony_hub
-          activity: 'Family Room TV - Home'
-      turn_off:
-        service: remote.turn_off
-        data:
-          entity_id: remote.family_room_harmony_hub
-
     basement_tv:
       friendly_name: 'Basement TV'
       value_template: "{{ is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement TV - Home') or is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement Live TV') or is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement Netflix') }}"

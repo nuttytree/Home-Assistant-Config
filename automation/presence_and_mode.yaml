@@ -40,7 +40,12 @@
     to: 'off'
     for: '00:00:30'
   action:
-  - service: rest_command.all_off_when_leave
+  - service: switch.turn_off
+    data_template:
+      entity_id: "{{ expand(states.switch) | selectattr('state', 'eq', 'on') | rejectattr('attributes.hidden') | rejectattr('attributes.nutty_leave_on_gone') | map(attribute='entity_id') | list | join(', ') }}"
+  - service: light.turn_off
+    data_template:
+      entity_id: "{{ expand(states.light) | selectattr('state', 'eq', 'on') | rejectattr('attributes.hidden') | rejectattr('attributes.nutty_leave_on_gone') | rejectattr('attributes.type', 'eq', 'browser_mod') | map(attribute='entity_id') | list | join(', ') }}"
   - service: cover.close_cover
     entity_id: cover.main_garage_door
 
@@ -53,7 +58,12 @@
     entity_id: input_boolean.day_night
     to: 'off'
   action:
-  - service: rest_command.all_off_at_night
+  - service: switch.turn_off
+    data_template:
+      entity_id: "{{ expand(states.switch) | selectattr('state', 'eq', 'on') | rejectattr('attributes.hidden') | rejectattr('attributes.nutty_leave_on_night') | map(attribute='entity_id') | list | join(', ') }}"
+  - service: light.turn_off
+    data_template:
+      entity_id: "{{ expand(states.light) | selectattr('state', 'eq', 'on') | rejectattr('attributes.hidden') | rejectattr('attributes.nutty_leave_on_night') | rejectattr('attributes.type', 'eq', 'browser_mod') | map(attribute='entity_id') | list | join(', ') }}"
   - service: cover.close_cover
     entity_id: cover.main_garage_door
 

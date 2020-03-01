@@ -1,6 +1,8 @@
 - platform: time_date
   display_options:
   - 'time'
+  - 'date'
+  - 'date_time'
 
 - platform: zoneminder
   include_archived: false
@@ -39,11 +41,6 @@
       friendly_name: "Master Count"
       icon_template: "{% if states('sensor.master_count')|int == 2 %}mdi:account-multiple{% elif states('sensor.master_count')|int == 1 %}mdi:account{% else %}mdi:account-off{% endif %}"
       value_template: "{{ is_state('binary_sensor.presence_chris', 'on')|int + is_state('binary_sensor.presence_melissa', 'on')|int }}"
-
-    melissas_speed:
-      friendly_name: "Melissa's Speed"
-      value_template: "{{ state_attr('device_tracker.melissa_phone_gps', 'speed')|int }}"
-      unit_of_measurement: 'MPH'
 
 - platform: statistics
   name: Upstairs Bathroom Humidity Statistics
@@ -88,3 +85,33 @@
 
 - platform: cert_expiry
   host: !secret url_host
+
+- platform: waze_travel_time
+  name: Chris To Home
+  origin: device_tracker.chris_phone_gps
+  destination: zone.home
+  region: US
+
+- platform: waze_travel_time
+  name: To Chris' Office
+  origin: device_tracker.chris_phone_gps
+  destination: zone.chris_work
+  region: US
+
+- platform: waze_travel_time
+  name: Melissa To Home
+  origin: device_tracker.melissa_phone_gps
+  destination: zone.home
+  region: US
+
+- platform: waze_travel_time
+  name: To Melissa's Office
+  origin: device_tracker.melissa_phone_gps
+  destination: zone.melissa_s_work_office
+  region: US
+
+- platform: waze_travel_time
+  name: To Melissa's Southdale Office
+  origin: device_tracker.melissa_phone_gps
+  destination: zone.melissa_s_work_southdale
+  region: US

@@ -20,9 +20,11 @@
 .cloud
 .storage
 .vscode
+custom_components
 ssl
 tensorflow
 www/cameras/*.jpg
+www/community
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 google_calendars.yaml

@@ -22,13 +22,28 @@
       data_template:
         node_id: '{{ state_attr(trigger.entity_id, "node_id")|int }}'
 
+- id: vacuum_main_floor
+  alias: Vacuum the Main Floor at Night
+  condition:
+    - condition: template
+      value_template: "{{ (as_timestamp(as_timestamp(strptime(states('sensor.date_time'), '%Y-%m-%d, %H:%M')) | timestamp_utc) - as_timestamp(state_attr('vacuum.neato', 'clean_stop'))) / 60 / 60 > 36 }}"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.day_night
+      to: 'off'
+      for: '00:15:00'
+  action:
+    - service: neato.custom_cleaning
+      data:
+        entity_id: vacuum.neato
+        category: 4
 
-# - id: auto_groups
-#   alias: Auto Groups
-#   initial_state: 'on'
-#   trigger:
-#   - platform: homeassistant
-#     event: start
-#   action:
-#   - delay: '00:00:10'
-#   - service: rest_command.sense_auto_group
+- id: auto_refresh
+  alias: Auto Refresh
+  trigger:
+  - platform: time_pattern
+    minutes: '/1'
+  action:
+  - service: homeassistant.update_entity
+    data_template:
+      entity_id: "{{ (expand(states.binary_sensor) + expand(states.sensor)) | selectattr('attributes.nutty_auto_refresh') | map(attribute='entity_id') | list | join(', ') }}"

@@ -8,6 +8,7 @@ homeassistant:
   customize: !include customize.yaml
   auth_providers:
    - type: homeassistant
+  packages: !include_dir_named packages
 
 image_processing: !include image_processing.yaml
 
@@ -25,8 +26,11 @@ automation: !include_dir_merge_list automation/
 
 binary_sensor: !include binary_sensors.yaml
 
-camera:
-  - platform: zoneminder
+browser_mod:
+  prefix: "browser_"
+
+# camera:
+#   - platform: zoneminder
 
 climate: !include climates.yaml
 
@@ -45,8 +49,6 @@ google:
   client_secret: !secret google_client_secret
 
 google_assistant: !include google_assistant.yaml
-
-group: !include groups.yaml
 
 hacs:
   token: !secret hacs_token
@@ -88,27 +90,22 @@ lovelace:
 
 map:
 
-mobile_app:
+media_player: !include media_players.yaml
 
-# mqtt: !include mqtt.yaml
-    
-nest:
-  client_id: !secret nest_client_id
-  client_secret: !secret nest_client_secret
+mobile_app:
 
 notify: !include notifiers.yaml
 
 python_script:
+
 recorder:
   db_url: !secret recorder_db_url
 
 remote: !include remotes.yaml
 
-rest_command: !include rest_commands.yaml
-
-sense:
-  email: !secret sense_username
-  password: !secret sense_password
+# sense:
+#   email: !secret sense_username
+#   password: !secret sense_password
 
 script: !include scripts.yaml
 
@@ -139,11 +136,11 @@ weather:
 
 zone: !include zones.yaml
 
-zoneminder:
-  - host: !secret zoneminder_url
-    ssl: true
-    verify_ssl: true
-    username: !secret zoneminder_username
-    password: !secret zoneminder_password
+# zoneminder:
+#   - host: !secret zoneminder_url
+#     ssl: true
+#     verify_ssl: true
+#     username: !secret zoneminder_username
+#     password: !secret zoneminder_password
 
 zwave: !include zwave.yaml

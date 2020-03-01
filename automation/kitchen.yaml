@@ -1,0 +1,26 @@
+- id: kitchen_tablet_screen_on
+  alias: Kitchen Tablet Screen On
+  initial_state: 'on'
+  trigger:
+  - platform: state 
+    entity_id: binary_sensor.browser_1e9f0398_65167b95
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data: 
+      entity_id: light.browser_1e9f0398_65167b95
+      brightness_pct: 80
+
+- id: kitchen_tablet_screen_off
+  alias: Kitchen Tablet Screen Off
+  initial_state: 'on'
+  trigger:
+  - platform: state 
+    entity_id: binary_sensor.browser_1e9f0398_65167b95
+    to: 'off'
+    for: '00:02:00'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.browser_1e9f0398_65167b95
+      brightness_pct: 1

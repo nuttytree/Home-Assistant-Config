@@ -2,10 +2,3 @@ accounts:
   email: !secret alexa_email
   password: !secret alexa_password
   url: "amazon.com"
-  include_devices:
-    - "Alexa Guard cc675"
-    - "Basement Echo"
-    - "Bedroom Echo"
-    - "Family Room Echo"
-    - "Living Room Echo"
-    - "Office Echo"

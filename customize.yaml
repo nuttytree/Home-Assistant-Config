@@ -75,10 +75,6 @@ sensor.upstairs_bathroom_luminance:
   icon: mdi:brightness-6
 cover.main_garage_door:
   device_class: garage
-group.all_automations:
-  hidden: false
-  control: hidden
-  friendly_name: Automations
 sensor.sense_bbbefa14:
   friendly_name: Curling Iron
 switch.basement_stair_lights_bottom:
@@ -99,6 +95,7 @@ light.maysons_outlet:
   hidden: true
 switch.maysons_fan:
   icon: mdi:fan
+  nutty_leave_on_night: 'true'
 switch.garage_lights:
   icon: mdi:lightbulb
 zwave.bird_bath:
@@ -121,7 +118,7 @@ sensor.master_bath_outlet_sourcenodeid:
   hidden: true
 switch.master_bath_outlet_switch_2:
   hidden: true
-switch.master_bath_fan:
+switch.master_bathroom_fan:
   icon: mdi:fan
 sensor.upstairs_bathroom_burglar:
   hidden: true
@@ -215,6 +212,8 @@ binary_sensor.whirlpool:
   icon: mdi:water
 switch.coffee_maker_bold_setting:
   icon: mdi:coffee
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
 binary_sensor.garage_freezer_door:
   icon: mdi:fridge-top
 sensor.garage_fridge_comp_temp:
@@ -241,3 +240,19 @@ binary_sensor.master_bed_melissa:
   icon: mdi:hotel
 binary_sensor.master_bed_someone:
   icon: mdi:hotel
+binary_sensor.device_offline:
+  nutty_auto_refresh: 'true'
+switch.coffee_maker:
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
+switch.pool_cleaner:
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
+switch.pool_heater:
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
+switch.smartthings_patio_lights_outlet:
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
+switch.pool_pump:
+  nutty_leave_on_gone: 'true'

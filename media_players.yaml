@@ -1,0 +1,31 @@
+- platform: androidtv
+  name: ADB Family Room TV
+  device_class: firetv
+  host: !secret firetv_family_room_ip
+  apps:
+    com.amazon.tv.launcher: Fire TV Home
+    com.silicondust.view: HD Homerun TV
+  state_detection_rules:
+    com.amazon.tv.launcher:
+      - standby
+    com.silicondust.view:
+      - media_session_state
+    com.netflix.ninja:
+      - media_session_state
+    com.plexapp.android:
+      - paused:
+          media_session_state: 3
+          wake_lock_size: 1
+      - playing:
+          media_session_state: 3
+      - standby
+    com.amazon.avod:
+      - playing:
+          wake_lock_size: 4
+      - playing:
+          wake_lock_size: 3
+      - paused:
+          wake_lock_size: 2
+      - paused:
+          wake_lock_size: 1
+      - standby
