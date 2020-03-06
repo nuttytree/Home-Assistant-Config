@@ -92,8 +92,6 @@ views:
         type: 'custom:calendar-card'
         entities:
           - calendar.nussbaum_family_calendar
-          - calendar.pack_342
-          - calendar.aqjt_competitive_prep
         startFromToday: true
         numberOfDays: 30
         showLocation: true
@@ -486,8 +484,6 @@ views:
             type: 'custom:calendar-card'
             entities:
               - calendar.nussbaum_family_calendar
-              - calendar.pack_342
-              - calendar.aqjt_competitive_prep
             startFromToday: true
             numberOfDays: 30
             showLocation: false

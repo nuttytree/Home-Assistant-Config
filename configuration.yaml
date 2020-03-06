@@ -96,6 +96,18 @@ mobile_app:
 
 notify: !include notifiers.yaml
 
+person:
+  - id: chris
+    name: Chris
+    user_id: !secret ha_user_id_chris
+    device_trackers:
+      - device_tracker.chris_phone_gps
+  - id: melissa
+    name: Melissa
+    user_id:  !secret ha_user_id_melissa
+    device_trackers:
+      - device_tracker.melissa_phone_gps
+
 python_script:
 
 recorder:
