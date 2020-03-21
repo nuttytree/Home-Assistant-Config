@@ -31,7 +31,7 @@
     - platform: state
       entity_id: input_boolean.day_night
       to: 'off'
-      for: '00:15:00'
+      for: '01:00:00'
   action:
     - service: neato.custom_cleaning
       data:

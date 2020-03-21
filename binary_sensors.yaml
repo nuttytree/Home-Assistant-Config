@@ -1,19 +1,10 @@
 - platform: template
   sensors:
-    presence_chris:
-      friendly_name: "Chris"
-      device_class: presence
-      value_template: "{{ is_state('device_tracker.chris_phone_gps', 'home') and is_state('device_tracker.smartstart_706837', 'home') }}"
-
-    presence_melissa:
-      friendly_name: "Melissa"
-      device_class: presence
-      value_template: "{{ is_state('device_tracker.melissa_phone_gps', 'home') and is_state('device_tracker.smartstart_90947', 'home') }}"
-
     presence_all:
       friendly_name: "Presence"
       device_class: presence
-      value_template: "{{ is_state('binary_sensor.presence_chris', 'on') or is_state('binary_sensor.presence_melissa', 'on') or is_state('group.presence_shared', 'on') or is_state('input_boolean.guest_mode', 'on') or is_state('input_boolean.pool_party_mode', 'on') }}"
+      entity_id: person.chris, person.melissa
+      value_template: "{{ expand(['person.chris', 'person.melissa']) | selectattr('state', 'eq', 'home') | list | count > 0 }}"
     
     upstairs_hall_motion:
       friendly_name: "Upstairs Hall Motion"
@@ -92,3 +83,11 @@
     device_offline:
       friendly_name: One or More Devices are Offline
       value_template: "{{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length > 0 }}"
+
+    robo_vac_status:
+      friendly_name: Robo-Vac Status
+      device_class: connectivity
+      icon_template: mdi:robot-vacuum-variant
+      entity_id: vacuum.neato
+      value_template: "{{ not is_state('vacuum.neato', 'unavailable') }}"
+

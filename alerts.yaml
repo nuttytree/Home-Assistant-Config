@@ -59,11 +59,18 @@ time_to_upgrade:
 
 device_offline:
   name: Device(s) Offline
-  title: "Device{% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length > 1 %}s{% endif %} Offline!"
+  title: >
+    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 0 %}
+      Devices Back Online!
+    {% elif expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 1 %}
+      {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | first | replace(' Status', '')}} Offline!
+    {% else %}
+      Devices Offline!
+    {% endif %}
   entity_id: binary_sensor.device_offline
   state: "on"
   message: >
-    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length == 1 %}
+    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 1 %}
       The {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | first | replace(' Status', '')}} is offline
     {% else %}
       The following devices are offline: {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | list | join(', ') | replace(' Status', '')}}

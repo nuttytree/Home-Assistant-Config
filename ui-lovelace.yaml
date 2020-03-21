@@ -384,14 +384,14 @@ views:
         type: entities
         show_header_toggle: false
         entities:
-          - binary_sensor.presence_chris
+          - person.chris
           - device_tracker.chris_phone_gps
           - device_tracker.smartstart_706837
       - title: Melissa
         type: entities
         show_header_toggle: false
         entities:
-          - binary_sensor.presence_melissa
+          - person.melissa
           - device_tracker.melissa_phone_gps
           - device_tracker.smartstart_90947
       - title: Mayson
@@ -640,8 +640,8 @@ views:
             gridcol: 1/3
             gridrow: 1
             entities:
-              - device_tracker.chris_phone_gps
-              - device_tracker.melissa_phone_gps
+              - person.chris
+              - person.melissa
               - zone.home
               - zone.chris_work
               - zone.melissa_s_work_office
@@ -663,7 +663,8 @@ views:
                   options:
                     name: Travel Time to Work
               exclude:
-                - state: "< 5"
+                - state: "< 3"
+                - state: unknown
           - type: custom:auto-entities
             card:
               title: Melissa
@@ -684,7 +685,8 @@ views:
                   options:
                     name: Travel Time to Work (Southdale)
               exclude:
-                - state: "< 5"
+                - state: "< 3"
+                - state: unknown
   - title: Kitchen Tablet Thermostats
     icon: mdi:thermostat
     panel: true

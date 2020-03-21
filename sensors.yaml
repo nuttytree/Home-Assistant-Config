@@ -39,8 +39,9 @@
 
     master_count:
       friendly_name: "Master Count"
+      entity_id: person.chris, person.melissa
       icon_template: "{% if states('sensor.master_count')|int == 2 %}mdi:account-multiple{% elif states('sensor.master_count')|int == 1 %}mdi:account{% else %}mdi:account-off{% endif %}"
-      value_template: "{{ is_state('binary_sensor.presence_chris', 'on')|int + is_state('binary_sensor.presence_melissa', 'on')|int }}"
+      value_template: "{{ expand(['person.chris', 'person.melissa']) | selectattr('state', 'eq', 'home') | list | count }}"
 
 - platform: statistics
   name: Upstairs Bathroom Humidity Statistics
@@ -88,30 +89,30 @@
 
 - platform: waze_travel_time
   name: Chris To Home
-  origin: device_tracker.chris_phone_gps
+  origin: person.chris
   destination: zone.home
   region: US
 
 - platform: waze_travel_time
   name: To Chris' Office
-  origin: device_tracker.chris_phone_gps
+  origin: person.chris
   destination: zone.chris_work
   region: US
 
 - platform: waze_travel_time
   name: Melissa To Home
-  origin: device_tracker.melissa_phone_gps
+  origin: person.melissa
   destination: zone.home
   region: US
 
 - platform: waze_travel_time
   name: To Melissa's Office
-  origin: device_tracker.melissa_phone_gps
+  origin: person.melissa
   destination: zone.melissa_s_work_office
   region: US
 
 - platform: waze_travel_time
   name: To Melissa's Southdale Office
-  origin: device_tracker.melissa_phone_gps
+  origin: person.melissa
   destination: zone.melissa_s_work_southdale
   region: US

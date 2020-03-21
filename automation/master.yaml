@@ -7,8 +7,8 @@
     to: 'off'
     for: '01:00:00'
   - platform: state
-    entity_id: binary_sensor.presence_melissa
-    to: 'off'
+    entity_id: person.melissa
+    from: 'home'
   action:
   - service: switch.turn_off
     entity_id: switch.master_bath_outlet
