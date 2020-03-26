@@ -10,6 +10,10 @@ resources:
     type: module
   - url: /community_plugin/group-card/group-card.js
     type: module
+  - url: /community_plugin/light-entity-card/light-entity-card.js
+    type: js
+  - url: /community_plugin/light-entity-row/light-entity-row.js
+    type: js
   - url: /community_plugin/lovelace-auto-entities/auto-entities.js
     type: module
   - url: /community_plugin/lovelace-dummy-entity-row/dummy-entity-row.js
@@ -24,6 +28,8 @@ resources:
     type: js
   - url: /community_plugin/lovelace-template-entity-row/template-entity-row.js
     type: module
+  - url: /community_plugin/rgb-light-card/card.js
+    type: js
   - url: /community_plugin/simple-thermostat/simple-thermostat.js
     type: module
   - url: /community_plugin/swipe-card/swipe-card.js
@@ -92,6 +98,7 @@ views:
         type: 'custom:calendar-card'
         entities:
           - calendar.nussbaum_family_calendar
+          - calendar.troop_479
         startFromToday: true
         numberOfDays: 30
         showLocation: true
@@ -461,14 +468,6 @@ views:
           - input_number.mayson_update_remaining_electronic_time
           - input_text.mayson_electronic_time_update_pin
           - script.update_mayson_electronics_time
-  - title: Experiment
-    icon: 'mdi:beaker'
-    cards:
-      - title: test light
-        type: glance
-        entities: 
-          - light.back
-          - switch.garage_lights
   - title: Kitchen Tablet Home
     icon: 'mdi:home'
     panel: true
@@ -484,6 +483,7 @@ views:
             type: 'custom:calendar-card'
             entities:
               - calendar.nussbaum_family_calendar
+              - calendar.troop_479
             startFromToday: true
             numberOfDays: 30
             showLocation: false
@@ -620,6 +620,62 @@ views:
             type: custom:slider-entity-row
             entity: light.gazebo
             toggle: true
+          - name: Patio
+            entity: switch.patio_lights
+          - name: Pool
+            entity: light.pool_lights
+          - type: custom:rgb-light-card
+            entity: light.pool_lights
+            justify: around
+            colors:
+              - icon_color: white
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: white
+              - icon_color: blue
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: blue
+              - icon_color: green
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: green
+              - icon_color: red
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: red
+              - icon_color: '#ffbf00'
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: amber
+              - icon_color: magenta
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: magenta
+              - icon_color: center/90% url('https://ha.nuttytree.dynu.net/local/slow-blink.png')
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: slow change
+              - icon_color: center/90% url('https://ha.nuttytree.dynu.net/local/fast-blink.png')
+                type: call-service
+                service: light.turn_on
+                service_data:
+                  entity_id: light.pool_lights
+                  effect: fast change
       - title: Garage
         type: entities
         entities:
