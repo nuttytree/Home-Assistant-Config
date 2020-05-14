@@ -25,8 +25,9 @@
 - id: vacuum_main_floor
   alias: Vacuum the Main Floor at Night
   condition:
-    - condition: template
-      value_template: "{{ (as_timestamp(as_timestamp(strptime(states('sensor.date_time'), '%Y-%m-%d, %H:%M')) | timestamp_utc) - as_timestamp(state_attr('vacuum.neato', 'clean_stop'))) / 60 / 60 > 36 }}"
+    - condition: state
+      entity_id: binary_sensor.time_to_vacuum_main_floor
+      state: 'on'
   trigger:
     - platform: state
       entity_id: input_boolean.day_night

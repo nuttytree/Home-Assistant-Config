@@ -1,7 +1,0 @@
-pool_setpoint:
-  name: Pool Setpoint
-  min: 60
-  max: 95
-  step: 1
-  mode: slider
-  unit_of_measurement: "°F"

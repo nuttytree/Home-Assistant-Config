@@ -4,35 +4,35 @@ resources:
   - url: /local/custom-cards/popup-card.js
     type: js
   
-  - url: /community_plugin/calendar-card/calendar-card.js
+  - url: /hacsfiles/calendar-card/calendar-card.js
     type: module
-  - url: /community_plugin/custom-header/custom-header.js
+  - url: /hacsfiles/custom-header/custom-header.js
     type: module
-  - url: /community_plugin/group-card/group-card.js
+  - url: /hacsfiles/group-card/group-card.js
     type: module
-  - url: /community_plugin/light-entity-card/light-entity-card.js
+  - url: /hacsfiles/light-entity-card/light-entity-card.js
     type: js
-  - url: /community_plugin/light-entity-row/light-entity-row.js
+  - url: /hacsfiles/light-entity-row/light-entity-row.js
     type: js
-  - url: /community_plugin/lovelace-auto-entities/auto-entities.js
+  - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
     type: module
-  - url: /community_plugin/lovelace-dummy-entity-row/dummy-entity-row.js
+  - url: /hacsfiles/lovelace-dummy-entity-row/dummy-entity-row.js
     type: module
-  - url: /community_plugin/lovelace-gui-sandbox/gui-sandbox.js
+  - url: /hacsfiles/lovelace-gui-sandbox/gui-sandbox.js
     type: module
-  - url: /community_plugin/lovelace-layout-card/layout-card.js
+  - url: /hacsfiles/lovelace-layout-card/layout-card.js
     type: module
-  - url: /community_plugin/lovelace-slider-entity-row/slider-entity-row.js
+  - url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
     type: module
-  - url: /community_plugin/lovelace-swipe-navigation/swipe-navigation.js
+  - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
     type: js
-  - url: /community_plugin/lovelace-template-entity-row/template-entity-row.js
+  - url: /hacsfiles/lovelace-template-entity-row/template-entity-row.js
     type: module
-  - url: /community_plugin/rgb-light-card/card.js
+  - url: /hacsfiles/rgb-light-card/card.js
     type: js
-  - url: /community_plugin/simple-thermostat/simple-thermostat.js
+  - url: /hacsfiles/simple-thermostat/simple-thermostat.js
     type: module
-  - url: /community_plugin/swipe-card/swipe-card.js
+  - url: /hacsfiles/swipe-card/swipe-card.js
     type: module
 
 swipe_nav:
@@ -159,83 +159,6 @@ views:
             - entity_id: switch.pool_cleaner
             - entity_id: switch.coffee_maker_bold_setting
             - entity_id: switch.neato_schedule
-  - title: Lights
-    icon: 'mdi:lightbulb'
-    path: lights
-    cards:
-      - title: Ground Floor
-        type: entities
-        entities:
-          - name: Family Room
-            type: custom:slider-entity-row
-            entity: light.family_room_light
-            toggle: true
-          - name: Kitchen Table
-            type: custom:slider-entity-row
-            entity: light.kitchen_table_light
-            toggle: true
-      - title: Upstairs
-        type: entities
-        entities:
-          - name: Master Bath
-            type: custom:slider-entity-row
-            entity: light.master_bath
-            toggle: true
-          - name: Master Toilet
-            type: custom:slider-entity-row
-            entity: light.master_toilet
-            toggle: true
-          - name: Mayson's Room
-            type: custom:slider-entity-row
-            entity: light.maysons
-            toggle: true
-          - name: Guest Room
-            type: custom:slider-entity-row
-            entity: light.guest_bedroom
-            toggle: true
-          - name: Office
-            type: custom:slider-entity-row
-            entity: light.office_light
-            toggle: true
-      - title: Basement
-        type: entities
-        entities:
-          - name: TV
-            type: custom:slider-entity-row
-            entity: light.basement_tv
-            toggle: true
-          - name: Main
-            type: custom:slider-entity-row
-            entity: light.basement
-            toggle: true
-          - name: Bar
-            type: custom:slider-entity-row
-            entity: light.bar
-            toggle: true
-          - name: Pool Table
-            entity: switch.pool_table_light
-      - title: Outside
-        type: entities
-        entities:
-          - name: Front
-            entity: switch.front_lights
-          - name: Deck
-            type: custom:slider-entity-row
-            entity: light.deck
-            toggle: true
-          - name: Back
-            type: custom:slider-entity-row
-            entity: light.back
-            toggle: true
-          - name: Gazebo
-            type: custom:slider-entity-row
-            entity: light.gazebo
-            toggle: true
-      - title: Garage
-        type: entities
-        entities:
-          - name: Garage
-            entity: switch.garage_lights
   - title: Ground Floor
     icon: 'mdi:home-floor-g'
     path: main_floor_view
@@ -244,13 +167,14 @@ views:
         type: entities
         entities:
           - light.kitchen_table_light
+          - light.kitchen_bar_lights
           - switch.coffee_maker
           - switch.coffee_maker_bold_setting
         show_header_toggle: false
       - title: Family Room
         type: entities
         entities:
-          # - switch.computer_light
+          - light.computer_light
           - light.family_room_light
   - title: Upstairs
     icon: mdi:home-floor-2
@@ -301,7 +225,7 @@ views:
     path: basement_view
     cards:
       - entities:
-          - switch.basement_stair_lights
+          - light.basement_stair_lights
           - light.basement_tv
           - light.basement
           - light.bar
@@ -361,6 +285,7 @@ views:
           - switch.patio_lights
           - switch.bird_bath
           - switch.fountain
+          - switch.fire_pit
         title: Outside
         type: entities
   - title: Cameras
@@ -452,9 +377,19 @@ views:
             - domain: binary_sensor
               attributes:
                 device_class: connectivity
+      - name: Signal Strengths
+        type: custom:auto-entities
+        card:
+          title: Devices
+          type: entities
+          show_header_toggle: false
+        sort:
+          method: state
+        filter:
+          include:
+            - entity_id: "*_wifi_signal"
       - name: Lovelace Sandbox
         type: custom:gui-sandbox
-  - !include /config/lovelace/kitchen_tablet.yaml
   - title: Mayson's Electronics Time
     icon: 'mdi:av-timer'
     cards:
@@ -525,11 +460,11 @@ views:
                 - state: "off"
                 - state: "closed"
                 - state: "unavailable"
+                - entity_id: "*_2"
                 - entity_id: "*_do_not_disturb_switch"
                 - entity_id: "*_repeat_switch"
                 - entity_id: "*_shuffle_switch"
                 - entity_id: "*_bathroom_fan"
-                - entity_id: switch.basement_stair_lights
                 - entity_id: switch.pool_pump_new
                 - entity_id: switch.pool_cleaner_new
                 - entity_id: switch.pool_heater_new
@@ -555,9 +490,17 @@ views:
             type: custom:slider-entity-row
             entity: light.family_room_light
             toggle: true
+          - name: Computer
+            type: custom:slider-entity-row
+            entity: light.computer_light
+            toggle: true
           - name: Kitchen Table
             type: custom:slider-entity-row
             entity: light.kitchen_table_light
+            toggle: true
+          - name: Kitchen Bar
+            type: custom:slider-entity-row
+            entity: light.kitchen_bar_lights
             toggle: true
       - title: Upstairs
         type: entities
@@ -574,6 +517,14 @@ views:
             type: custom:slider-entity-row
             entity: light.maysons
             toggle: true
+          - name: Bathroom Main
+            type: custom:slider-entity-row
+            entity: light.upstairs_bathroom_main
+            toggle: true
+          - name: Bathroom Vanity
+            type: custom:slider-entity-row
+            entity: light.upstairs_bathroom_vanity
+            toggle: true
           - name: Guest Room
             type: custom:slider-entity-row
             entity: light.guest_bedroom
@@ -585,6 +536,10 @@ views:
       - title: Basement
         type: entities
         entities:
+          - name: Stairs
+            type: custom:slider-entity-row
+            entity: light.basement_stair_lights
+            toggle: true
           - name: TV Area
             type: custom:slider-entity-row
             entity: light.basement_tv

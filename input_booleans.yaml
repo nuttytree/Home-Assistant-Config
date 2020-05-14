@@ -9,6 +9,3 @@ pool_party_mode:
 
 day_night:
   name: Day/Night Mode
-
-start_coffee:
-  name: Start Coffee

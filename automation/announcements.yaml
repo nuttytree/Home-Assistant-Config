@@ -53,3 +53,20 @@
         {% endif %}
       data:
         type: "announce"
+
+- id: '1589419206678'
+  alias: Announcement - Mayson's Medicine
+  trigger:
+  - at: '07:30'
+    platform: time
+  - at: '12:30'
+    platform: time
+  - at: '17:30'
+    platform: time
+  condition: []
+  action:
+  - service: notify.alexa_media_inside
+    data_template:
+      message: "Just a friendly reminder, it is time for Mayson to take his {% if states('sensor.time') < '08:00' %}medication and {% endif %}fiber."
+      data:
+        type: "announce"

@@ -3,9 +3,7 @@
   - 'time'
   - 'date'
   - 'date_time'
-
-- platform: zoneminder
-  include_archived: false
+  - 'date_time_utc'
 
 - platform: template
   sensors:

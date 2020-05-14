@@ -1,5 +1,0 @@
-start_coffee:
-  name: Start Coffee At?
-  has_date: false
-  has_time: true
-  initial: 04:45

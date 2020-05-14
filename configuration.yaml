@@ -16,8 +16,6 @@ alert: !include alerts.yaml
 
 alexa: !include alexa.yaml
 
-alexa_media: !include alexa_media.yaml
-
 api:
 
 auth:
@@ -35,8 +33,6 @@ browser_mod:
 climate: !include climates.yaml
 
 config:
-
-cover: !include covers.yaml
 
 device_tracker: !include device_trackers.yaml
 
@@ -69,12 +65,6 @@ history:
 http: !include http.yaml
 
 input_boolean: !include input_booleans.yaml
-
-input_datetime: !include input_datetime.yaml
-
-input_number: !include input_number.yaml
-
-input_select: !include input_selects.yaml
 
 light: !include lights.yaml
 
@@ -115,10 +105,6 @@ recorder:
 
 remote: !include remotes.yaml
 
-# sense:
-#   email: !secret sense_username
-#   password: !secret sense_password
-
 script: !include scripts.yaml
 
 sensor: !include sensors.yaml
@@ -147,12 +133,5 @@ weather:
     mode: daily
 
 zone: !include zones.yaml
-
-# zoneminder:
-#   - host: !secret zoneminder_url
-#     ssl: true
-#     verify_ssl: true
-#     username: !secret zoneminder_username
-#     password: !secret zoneminder_password
 
 zwave: !include zwave.yaml

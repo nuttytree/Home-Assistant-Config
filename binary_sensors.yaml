@@ -91,3 +91,7 @@
       entity_id: vacuum.neato
       value_template: "{{ not is_state('vacuum.neato', 'unavailable') }}"
 
+    time_to_vacuum_main_floor:
+      friendly_name: "Time to Vacuum the Main Floor"
+      value_template: "{{ (as_timestamp(strptime(states('sensor.date_time'), '%Y-%m-%d, %H:%M')) - as_timestamp(state_attr('automation.vacuum_the_main_floor_at_night', 'last_triggered'))) / 60 /60 > 36 }}"
+

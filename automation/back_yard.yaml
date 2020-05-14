@@ -2,8 +2,8 @@
   alias: 'Patio Lights On At Night'
   initial_state: 'on'
   trigger:
-    - platform: sun
-      event: sunset
+    - platform: template
+      value_template: "{{ state_attr('sun.sun', 'elevation') <= 0 }}"
     - platform: state
       entity_id: binary_sensor.presence_all
       to: 'on'
@@ -13,9 +13,8 @@
       - condition: state
         entity_id: binary_sensor.presence_all
         state: 'on'
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') <= 0 }}"
   action:  
     - service: homeassistant.turn_on
       entity_id:
@@ -25,30 +24,6 @@
         entity_id: light.pool_lights
         effect: Blue
 
-
-- id: pool_lights_double_tap_up
-  alias: "Pool Lights Double Tap Up"
-  initial_state: 'on'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.pool_lights_double_tap_up
-      to: 'on'
-  action:
-    - service: switch.turn_on
-      entity_id: switch.patio_lights
-
-
-- id: pool_lights_double_tap_down
-  alias: "Pool Lights Double Tap Down"
-  initial_state: 'on'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.pool_lights_double_tap_down
-      to: 'on'
-  action:
-    - service: switch.turn_off
-      entity_id: switch.patio_lights
-      
 
 - id: fountain_bird_bath_for_pool_party
   alias: 'Fountain and Bird Bath for Pool Party'
@@ -68,8 +43,8 @@
   alias: 'Lights for Pool Party'
   initial_state: 'on'
   trigger:
-    - platform: sun
-      event: sunset
+    - platform: template
+      value_template: "{{ state_attr('sun.sun', 'elevation') <= 0 }}"
     - platform: state
       entity_id: input_boolean.pool_party_mode
       to: 'on'
@@ -79,9 +54,8 @@
       - condition: state
         entity_id: input_boolean.pool_party_mode
         state: 'on'
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') <= 0 }}"
   action:  
     - service: light.turn_on
       data:
