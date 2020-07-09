@@ -1,5 +1,17 @@
 - platform: template
   lights:
+    always_on:
+      friendly_name: 'Always On Light to Prevent Automation Errors'
+      value_template: true
+      turn_on:
+      turn_off:
+
+    always_off:
+      friendly_name: 'Always Off Light to Prevent Automation Errors'
+      value_template: false
+      turn_on:
+      turn_off:
+
     maysons:
       friendly_name: "Mayson's Lights"
       value_template: "{% if is_state('light.maysons_switch', 'on') %}on{%else%}off{%endif%}"

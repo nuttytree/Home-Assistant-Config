@@ -1,0 +1,64 @@
+views:
+  - path: system-devices
+    cards:
+      - title: System
+        type: entities
+        show_header_toggle: false
+        entities:
+          - entity: sensor.current_version
+            name: Home Assistant Version
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.current_version
+                name: Current
+              - entity: sensor.latest_version
+                name: Available
+          - entity: sensor.load_1m
+            name: System Load
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.load_1m
+                name: 1 Minute
+              - entity: sensor.load_5m
+                name: 5 Minute
+              - entity: sensor.load_15m
+                name: 15 Minute
+          - entity: sensor.memory_use_percent
+            name: Memory/Disk Use
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.memory_use_percent
+                name: Memory
+              - entity: sensor.disk_use_percent
+                name: Disk
+          - entity: sensor.ssl_certificate_expiry
+            type: custom:multiple-entity-row
+            unit: Days
+          - sensor.hacs
+      - title: Devices
+        type: custom:auto-entities
+        card:
+          title: Devices
+          type: entities
+        sort:
+          method: name
+        filter:
+          template: |
+            {% for sensor in states.binary_sensor %}
+              {% if sensor.attributes.device_class == 'connectivity' %}
+                {% set wifi = sensor.entity_id | replace('binary_sensor.', 'sensor.') | replace('_status', '_wifi_signal') -%}
+                {% if states(wifi) == 'unknown' %}
+                  {{ sensor.entity_id }}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          include:
+            - entity_id: "*_wifi_signal"
+              options:
+                type: custom:card-templater
+                entity_row:
+                  name_template: >-
+                    {{ state_attr('this.entity_id', 'friendly_name') | replace(' WiFi Signal', '') | replace(' Status', '') }}

@@ -32,7 +32,7 @@
           before: sunrise
   trigger:
   - platform: state
-    entity_id: device_tracker.chris_phone_gps, device_tracker.melissa_phone_gps, device_tracker.smartstart_706837, device_tracker.smartstart_90947, device_tracker.smartstart_1695751
+    entity_id: device_tracker.chris_pixel_3, device_tracker.melissa_galaxy_s9, device_tracker.smartstart_706837, device_tracker.smartstart_90947, device_tracker.smartstart_1695751
     to: 'home'
   - platform: state
     entity_id: cover.main_garage_door

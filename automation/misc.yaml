@@ -48,3 +48,13 @@
   - service: homeassistant.update_entity
     data_template:
       entity_id: "{{ (expand(states.binary_sensor) + expand(states.sensor)) | selectattr('attributes.nutty_auto_refresh') | map(attribute='entity_id') | list | join(', ') }}"
+
+- id: set_theme
+  alias: Set Default Theme
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: "Google Dark Theme"

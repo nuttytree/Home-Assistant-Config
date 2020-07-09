@@ -32,13 +32,14 @@ browser_mod:
 
 climate: !include climates.yaml
 
-config:
+default_config:
 
 device_tracker: !include device_trackers.yaml
 
 discovery:
 
 frontend:
+  themes: !include_dir_merge_named themes
 
 google:
   client_id: !secret google_client_id
@@ -64,11 +65,7 @@ history:
 
 http: !include http.yaml
 
-input_boolean: !include input_booleans.yaml
-
 light: !include lights.yaml
-
-logbook:
 
 logger:
   default: info
@@ -77,26 +74,25 @@ logger:
 
 lovelace:
   mode: yaml
-
-map:
+  dashboards:
+    lovelace-system-devices:
+      title: System and Devices
+      mode: yaml
+      filename: ui-system-devices.yaml
+      icon: mdi:server
+      show_in_sidebar: true
+      require_admin: true
+    lovelace-presence-mode:
+      title: Presence and Mode
+      mode: yaml
+      filename: ui-presence-mode.yaml
+      icon: mdi:account-switch
+      show_in_sidebar: true
+      require_admin: true
 
 media_player: !include media_players.yaml
 
-mobile_app:
-
 notify: !include notifiers.yaml
-
-person:
-  - id: chris
-    name: Chris
-    user_id: !secret ha_user_id_chris
-    device_trackers:
-      - device_tracker.chris_phone_gps
-  - id: melissa
-    name: Melissa
-    user_id:  !secret ha_user_id_melissa
-    device_trackers:
-      - device_tracker.melissa_phone_gps
 
 python_script:
 
@@ -113,19 +109,23 @@ smartstart:
   username: !secret smartstart_username
   password: !secret smartstart_password
 
+splunk:
+  host: !secret splunk_host
+  token: !secret splunk_token
+  ssl: "true"
+  verify_ssl: "false"
+
 stream:
 
-sun:
-
 switch: !include switches.yaml
-
-system_health:
 
 tts:
 - platform: google_translate
 
 updater:
   include_used_components: true
+
+var:
 
 weather:
   - platform: darksky

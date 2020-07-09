@@ -1,5 +1,17 @@
 - platform: template
   switches:
+    always_on:
+      friendly_name: 'Always On Switch to Prevent Automation Errors'
+      value_template: true
+      turn_on:
+      turn_off:
+
+    always_off:
+      friendly_name: 'Always Off Switch to Prevent Automation Errors'
+      value_template: false
+      turn_on:
+      turn_off:
+
     basement_tv:
       friendly_name: 'Basement TV'
       value_template: "{{ is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement TV - Home') or is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement Live TV') or is_state_attr('remote.basement_harmony_hub', 'current_activity', 'Basement Netflix') }}"

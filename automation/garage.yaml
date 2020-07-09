@@ -3,7 +3,7 @@
   initial_state: 'on'
   trigger:
   - platform: state
-    entity_id: device_tracker.chris_phone_gps
+    entity_id: device_tracker.chris_pixel_3
     to: 'home'
   - platform: state
     entity_id: device_tracker.smartstart_706837
@@ -12,13 +12,13 @@
     condition: or
     conditions:
     - condition: state
-      entity_id: device_tracker.chris_phone_gps
+      entity_id: device_tracker.chris_pixel_3
       state: 'not_home'
     - condition: state
       entity_id: device_tracker.smartstart_706837
       state: 'not_home'
   action:
-    - wait_template: "{{ is_state('device_tracker.chris_phone_gps', 'home') and is_state('device_tracker.smartstart_706837', 'home')}}"
+    - wait_template: "{{ is_state('device_tracker.chris_pixel_3', 'home') and is_state('device_tracker.smartstart_706837', 'home')}}"
       timeout: '00:02:00'
       continue_on_timeout: 'false'
     - service: cover.open_cover

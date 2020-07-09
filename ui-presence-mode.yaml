@@ -1,0 +1,46 @@
+ views:
+  - path: presence-mode
+    cards:
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.presence_all
+            name: Nutty Home
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: binary_sensor.presence_all
+                name: Presence
+              - entity: sensor.day_night
+                name: Day/Night
+          - entity: person.chris
+            name: Chris
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: device_tracker.smartstart_1695751
+                name: Suburban
+              - entity: device_tracker.smartstart_706837
+                name: G35
+              - entity: sensor.chris_status
+                name: Status
+          - entity: person.melissa
+            name: Melissa
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: device_tracker.smartstart_90947
+                name: MKX
+              - entity: person.melissa
+                name: Status
+          - entity: sensor.master_bed_status
+            name: Master Bed
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.melissa_bed_percent
+                name: Melissa
+              - entity: sensor.chris_bed_percent
+                name: Chris
+              - entity: sensor.master_bed_status
+                name: Status

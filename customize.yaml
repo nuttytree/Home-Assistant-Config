@@ -138,12 +138,6 @@ sensor.maysons_alarm_level:
   hidden: true
 sensor.maysons_alarm_type:
   hidden: true
-device_tracker.chris_phone_gps:
-  icon: mdi:cellphone-android
-  tid: C
-device_tracker.melissa_phone_gps:
-  icon: mdi:cellphone-android
-  tid: M
 switch.upstairs_bathroom_fan_2:
   hidden: true
 zwave.upstairs_bathroom_fan:
@@ -256,3 +250,4 @@ switch.smartthings_patio_lights_outlet:
   nutty_leave_on_night: 'true'
 switch.pool_pump:
   nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'

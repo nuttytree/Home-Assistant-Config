@@ -45,15 +45,9 @@ smart_home:
     - light.maysons_switch
     - light.maysons_outlet
   entity_config:
-    switch.basement_stair_lights:
-      display_categories: LIGHT
-    switch.computer_light:
-      display_categories: LIGHT
     switch.front_lights:
       display_categories: LIGHT
     switch.garage_lights:
-      display_categories: LIGHT
-    switch.patio_lights:
       display_categories: LIGHT
     switch.pool_table_light:
       display_categories: LIGHT

@@ -9,27 +9,27 @@ sensor:
       next_appointment_name:
         friendly_name: "Next Appointment Name"
         entity_id:
-          - calendar.nussbaum_family_calendar
-        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.message }}"
+          - calendar.family
+        value_template: "{{ (expand(['calendar.family', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.message }}"
 
       next_appointment_time:
         friendly_name: "Next Appointment Time"
         entity_id:
-          - calendar.nussbaum_family_calendar
-        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time }}"
+          - calendar.family
+        value_template: "{{ (expand(['calendar.family', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time }}"
 
       next_appointment_location:
         friendly_name: "Next Appointment Location"
         entity_id:
-          - calendar.nussbaum_family_calendar
-        value_template: "{{ (expand(['calendar.nussbaum_family_calendar', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.location }}"
+          - calendar.family
+        value_template: "{{ (expand(['calendar.family', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.location }}"
 
       next_appointment_leave_time:
         friendly_name: "Next Appointment Leave Time"
         entity_id:
-          - calendar.nussbaum_family_calendar
+          - calendar.family
           - sensor.to_next_appointment
-        value_template: "{{ ((expand(['calendar.nussbaum_family_calendar', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time | as_timestamp - (states('sensor.to_next_appointment') | int * 60) - 300) | timestamp_local }}"
+        value_template: "{{ ((expand(['calendar.family', 'calendar.troop_479']) | selectattr('attributes.start_time', 'defined') | selectattr('attributes.location', 'defined') | sort(attribute = 'attributes.start_time') | first).attributes.start_time | as_timestamp - (states('sensor.to_next_appointment') | int * 60) - 300) | timestamp_local }}"
 
       next_appointment_minutes_till_leave_time:
         friendly_name: "Next Appointment Leave Time"

@@ -1,6 +1,6 @@
 - id: kitchen_tablet_screen_on
   alias: Kitchen Tablet Screen On
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
   - platform: state 
     entity_id: binary_sensor.browser_1e9f0398_65167b95
@@ -13,7 +13,7 @@
 
 - id: kitchen_tablet_screen_off
   alias: Kitchen Tablet Screen Off
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
   - platform: state 
     entity_id: binary_sensor.browser_1e9f0398_65167b95

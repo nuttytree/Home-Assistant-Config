@@ -45,7 +45,7 @@
       delay_off:
         minutes: 10
       icon_template: "{% if is_state('binary_sensor.master_bed_all', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
-      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_count')|int > 0 and states('sensor.master_count') == states('sensor.master_bed_count') }}"
+      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_count')|int > 0 and states('sensor.master_count') <= states('sensor.master_bed_count') }}"
 
     upstairs_nest_protect:
       friendly_name: "Upstairs Nest Protect"
