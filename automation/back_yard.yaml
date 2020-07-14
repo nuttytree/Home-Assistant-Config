@@ -5,11 +5,17 @@
     - platform: template
       value_template: "{{ state_attr('sun.sun', 'elevation') <= 0 }}"
     - platform: state
+      entity_id: sensor.day_night
+      to: 'Day'
+    - platform: state
       entity_id: binary_sensor.presence_all
       to: 'on'
   condition:
     condition: and
     conditions:
+      - condition: state
+        entity_id: sensor.day_night
+        state: 'Day'
       - condition: state
         entity_id: binary_sensor.presence_all
         state: 'on'

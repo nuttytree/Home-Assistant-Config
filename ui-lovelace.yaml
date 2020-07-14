@@ -54,14 +54,14 @@ custom_header:
   restrict_users: true
   hide_help: true
   default_tab: home
-  show_tabs: 'home, lights, cameras, ground-floor, upstairs, basement, garage, outside, presence_view'
+  show_tabs: 'home, lights, switches, cameras, presence_view, pool'
   exceptions:
     - conditions:
         user_agent: Mobile
       config:
         hide_config: true
         default_tab: home-mobile
-        show_tabs: 'home-mobile, lights, cameras, ground-floor, upstairs, basement, garage, outside'
+        show_tabs: 'home-mobile, lights, switches, cameras, pool'
     - conditions:
         user: "Kitchen Tablet"
       config:
@@ -70,7 +70,7 @@ custom_header:
         compact_mode: true
         options_hide: true
         default_tab: home
-        show_tabs: 'home, lights, kitchen_map, kitchen_thermostat'
+        show_tabs: 'home, lights, switches, cameras, kitchen_map, kitchen_thermostat'
 
 title: The Nutty Home
 views:
@@ -387,6 +387,44 @@ views:
         entities:
           - name: Garage
             entity: switch.garage_lights
+  - path: switches
+    title: Switches
+    icon: 'mdi:apps'
+    panel: false
+    cards:
+      - title: Outside
+        type: entities
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - switch.bird_bath
+          - switch.fountain
+          - switch.fire_pit
+      - title: TV's
+        type: entities
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - switch.basement_tv
+          - switch.xbox
+      - title: Bathrooms
+        type: entities
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - switch.master_bathroom_fan
+          - switch.master_bath_outlet
+          - switch.upstairs_bathroom_fan
+          - fan.basement_bathroom_fan
+          - switch.basement_bathroom_heater
+      - title: Misc
+        type: entities
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - switch.coffee_maker
+          - switch.coffee_maker_bold_setting
+          - switch.maysons_fan
   - path: cameras
     title: Cameras
     icon: mdi:cctv
@@ -427,7 +465,6 @@ views:
           - light.master_toilet
           - switch.master_bathroom_fan
           - switch.master_bath_outlet
-          # - binary_sensor.whirlpool
           - sensor.master_bath_humidity
           - sensor.master_bath_temperature
           - sensor.master_bath_luminance
@@ -528,9 +565,52 @@ views:
           - switch.fire_pit
         title: Outside
         type: entities
+  - path: pool
+    icon: mdi:pool
+    visible: c09c79c3b4094f8cb264952754cf3f78
+    cards:
+      - title: Pool
+        type: entities
+        show_header_toggle: false
+        entities:
+          - entity: input_select.pool_mode
+            name: Mode
+          - entity: sensor.pool_pumps_temperature
+            name: Control
+            icon: mdi:camera-control
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.pool_pumps_voltage
+                name: Voltage
+              - entity: sensor.pool_pumps_temperature
+                name: Temperature
+          - entity: switch.pool_pump
+            name: Pump
+            icon: mdi:water-pump
+            type: custom:multiple-entity-row
+            toggle: true
+            entities:
+              - entity: sensor.pool_pump_current
+                name: Current
+              - entity: sensor.pool_pump_power
+                name: Power
+          - entity: switch.pool_cleaner
+            name: Cleaner
+            type: custom:multiple-entity-row
+            toggle: true
+            entities:
+              - entity: sensor.pool_cleaner_current
+                name: Current
+              - entity: sensor.pool_cleaner_power
+                name: Power
+          - entity: switch.pool_heater
+            name: Heater
+            icon: mdi:radiator
   - title: Presence
     icon: 'mdi:account-switch'
     path: presence_view
+    visible: c09c79c3b4094f8cb264952754cf3f78
     cards:
       - title: Home
         type: entities
@@ -569,7 +649,6 @@ views:
         type: entities
         show_header_toggle: false
         entities:
-          - binary_sensor.master_bed_any
           - binary_sensor.master_bed_all
           - binary_sensor.master_bed_someone
           - binary_sensor.master_bed_chris

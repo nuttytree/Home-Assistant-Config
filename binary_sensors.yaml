@@ -27,16 +27,6 @@
       icon_template: "{% if is_state('binary_sensor.mayson_in_bed', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
       value_template: "{{ (now().hour >= 20 or now().hour < 7) and is_state('switch.maysons_fan', 'on') }}"
 
-    master_bed_any:
-      friendly_name: "Master any in Bed"
-      entity_id: sensor.time, sensor.master_bed_count, binary_sensor.master_bed_any
-      delay_on:
-        minutes: 5
-      delay_off:
-        minutes: 10
-      icon_template: "{% if is_state('binary_sensor.master_bed_any', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
-      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_bed_count')|int > 0 }}"
-
     master_bed_all:
       friendly_name: "Master all in Bed"
       entity_id: sensor.time, sensor.master_count, sensor.master_bed_count, binary_sensor.master_bed_all

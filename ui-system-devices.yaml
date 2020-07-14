@@ -14,6 +14,9 @@ views:
                 name: Current
               - entity: sensor.latest_version
                 name: Available
+                tap_action:
+                  action: url
+                  url_path: https://www.home-assistant.io/latest-release-notes/
           - entity: sensor.load_1m
             name: System Load
             type: custom:multiple-entity-row
@@ -34,6 +37,17 @@ views:
                 name: Memory
               - entity: sensor.disk_use_percent
                 name: Disk
+          - entity: sensor.speedtest_download
+            name: Internet
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.speedtest_ping
+                name: Ping
+              - entity: sensor.speedtest_upload
+                name: Upload
+              - entity: sensor.speedtest_download
+                name: Download
           - entity: sensor.ssl_certificate_expiry
             type: custom:multiple-entity-row
             unit: Days
