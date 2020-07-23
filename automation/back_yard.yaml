@@ -1,5 +1,5 @@
-- id: patio_lights_on_at_night
-  alias: 'Patio Lights On At Night'
+- id: patio_pool_lights_on_at_night
+  alias: 'Patio And Pool Lights On At Night'
   initial_state: 'on'
   trigger:
     - platform: template
@@ -31,6 +31,19 @@
       data:
         entity_id: light.pool_lights
         effect: Blue
+
+
+- id: patio_pool_lights_off_at_sunrise
+  alias: 'Patio And Pool Lights Off At Sunrise'
+  initial_state: 'on'
+  trigger:
+    - platform: template
+      value_template: "{{ state_attr('sun.sun', 'elevation') > 0 }}"
+  action:  
+    - service: homeassistant.turn_off
+      entity_id:
+        - light.patio_lights
+        - light.pool_lights
 
 
 - id: fountain_bird_bath_for_pool_party

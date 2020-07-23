@@ -1,4 +1,4 @@
-- id: good_morning
+- id: day_mode
   alias: 'Set Day Mode'
   initial_state: 'on'
   condition:
@@ -12,19 +12,24 @@
   - platform: state
     entity_id: binary_sensor.master_bed_all
     to: 'off'
+    for: '00:10:00'
+  - platform: state
+    entity_id: device_tracker.chris_pixel_3, device_tracker.melissa_galaxy_s9
+    to: 'home'
   action:
   - service: input_boolean.turn_on
     entity_id:
     - input_boolean.day_night
 
 
-- id: good_night
+- id: night_mode
   alias: 'Set Night Mode'
   initial_state: 'on'
   trigger:
   - platform: state
     entity_id: binary_sensor.master_bed_all
     to: 'on'
+    for: '00:5:00'
   action:
   - service: input_boolean.turn_off
     entity_id:
