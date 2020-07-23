@@ -13,6 +13,8 @@
   condition:
     condition: and
     conditions:
+      - condition: time
+        after: '16:00:00'
       - condition: state
         entity_id: sensor.day_night
         state: 'Day'

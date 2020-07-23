@@ -229,11 +229,11 @@ input_boolean.leave_front_lights_on:
 switch.fountain:
   icon: mdi:fountain
 binary_sensor.master_bed_chris:
-  icon: mdi:hotel
+  icon: mdi:bed
 binary_sensor.master_bed_melissa:
-  icon: mdi:hotel
+  icon: mdi:bed
 binary_sensor.master_bed_someone:
-  icon: mdi:hotel
+  icon: mdi:bed
 binary_sensor.device_offline:
   nutty_auto_refresh: 'true'
 switch.coffee_maker:

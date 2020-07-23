@@ -587,7 +587,6 @@ views:
                 name: Temperature
           - entity: switch.pool_pump
             name: Pump
-            icon: mdi:water-pump
             type: custom:multiple-entity-row
             toggle: true
             entities:

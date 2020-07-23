@@ -24,7 +24,7 @@
     mayson_in_bed:
       friendly_name: "Mayson is in Bed"
       entity_id: sensor.time, switch.maysons_fan, binary_sensor.mayson_in_bed
-      icon_template: "{% if is_state('binary_sensor.mayson_in_bed', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      icon_template: "{% if is_state('binary_sensor.mayson_in_bed', 'off') %}mdi:bed-empty{% else %}mdi:bed{% endif %}"
       value_template: "{{ (now().hour >= 20 or now().hour < 7) and is_state('switch.maysons_fan', 'on') }}"
 
     master_bed_all:
@@ -34,7 +34,7 @@
         minutes: 5
       delay_off:
         minutes: 10
-      icon_template: "{% if is_state('binary_sensor.master_bed_all', 'off') %}mdi:bed-empty{% else %}mdi:hotel{% endif %}"
+      icon_template: "{% if is_state('binary_sensor.master_bed_all', 'off') %}mdi:bed-empty{% else %}mdi:bed{% endif %}"
       value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_count')|int > 0 and states('sensor.master_count') <= states('sensor.master_bed_count') }}"
 
     upstairs_nest_protect:
