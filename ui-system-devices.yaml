@@ -52,6 +52,26 @@ views:
             type: custom:multiple-entity-row
             unit: Days
           - sensor.hacs
+      - title: Disconnected Devices
+        type: custom:auto-entities
+        show_empty: false
+        card:
+          title: Disconnected Devices
+          type: entities
+        sort:
+          method: name
+        filter:
+          include:
+            - attributes:
+                device_class: connectivity
+              options:
+                type: custom:card-templater
+                entity_row:
+                  secondary_info: last-changed
+                  name_template: >-
+                    {{ state_attr('this.entity_id', 'friendly_name') | replace(' Status', '') }}
+          exclude:
+            - state: 'on'
       - title: Devices
         type: custom:auto-entities
         card:
@@ -76,3 +96,6 @@ views:
                 entity_row:
                   name_template: >-
                     {{ state_attr('this.entity_id', 'friendly_name') | replace(' WiFi Signal', '') | replace(' Status', '') }}
+          exclude:
+            - state: 'off'
+            - state: 'unavailable'
