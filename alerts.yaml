@@ -1,35 +1,28 @@
-garage_fridge_temp:
-  name: Garage Fridge Temperature Alert
-  title: Garage Fridge Temperature Alert!
-  entity_id: binary_sensor.garage_fridge_temp_alert
-  message: "Garage fridge temperature is {{ states('sensor.garage_fridge_temp') }} °F"
+fridge_freezer_temp:
+  name: Fridge/Freezer Temperature Alert
+  title: Fridge/Freezer Temperature Alert!
+  entity_id: binary_sensor.fridge_freezer_temp_alert
+  message: >
+    {% set message = "" %}
+    {% if is_state('binary_sensor.garage_fridge_temp_alert', 'on') %}
+      {% set message = message + "Garage Fridge: " + states('sensor.garage_fridge_temp') + "  " %}
+    {% endif %}
+    {% if is_state('binary_sensor.garage_freezer_temp_alert', 'on') %}
+      {% set message = message + "Garage Freezer: " + states('sensor.garage_freezer_temp') + "  " %}
+    {% endif %}
+    {{ message }}
   skip_first: true
   repeat:
-    - 1
+    - 10
     - 15
+    - 20
+    - 25
     - 30
-    - 60
   data:
-    url: https://ha.nuttytree.dynu.net/lovelace/garage_view
+    group: Alerts
+    tag: fridge_freezer_temp
   notifiers:
-    html5_chris_pixel_3
-
-
-garage_freezer_temp:
-  name: Garage Freezer Temperature Alert
-  title: Garage Freezer Temperature Alert!
-  entity_id: binary_sensor.garage_freezer_temp_alert
-  message: "Garage freezer temperature is {{ states('sensor.garage_freezer_temp') }} °F"
-  skip_first: true
-  repeat:
-    - 1
-    - 15
-    - 30
-    - 60
-  data:
-    url: https://ha.nuttytree.dynu.net/lovelace/garage_view
-  notifiers:
-    html5_chris_pixel_3
+    mobile_app_pixel_3
 
 
 storage_space_low:
@@ -42,9 +35,11 @@ storage_space_low:
     - 30
     - 60
   data:
-    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+    clickAction: /lovelace-system-devices/system-devices
+    group: Alerts
+    tag: storage_space_low
   notifiers:
-    html5_chris_pixel_3
+    mobile_app_pixel_3
 
 
 time_to_upgrade:
@@ -53,27 +48,51 @@ time_to_upgrade:
   entity_id: binary_sensor.time_to_upgrade
   message: 'The current version is {{ states("sensor.current_version") }} and the latest version is {{ states("sensor.latest_version") }}'
   repeat: 1440
+  data:
+    clickAction: /lovelace-system-devices/system-devices
+    group: Alerts
+    tag: time_to_upgrade
   notifiers:
-    html5_chris_pixel_3
+    mobile_app_pixel_3
 
+        {{ expand(states.binary_sensor) 
+        | selectattr('attributes.device_class', 'eq', 'connectivity')
+        | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_g35')
+        | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_suburban')
+        | selectattr('state', 'eq', 'off')
+        | list | length > 0 }}
 
 device_offline:
   name: Device(s) Offline
   title: >
-    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 0 %}
+    {% set offlineDevices =  expand(states.binary_sensor)
+      | selectattr('attributes.device_class', 'eq', 'connectivity')
+      | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_g35')
+      | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_suburban')
+      | selectattr('state', 'eq', 'off')
+      | list
+    %}
+    {% if offlineDevices | length == 0 %}
       Devices Back Online!
-    {% elif expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 1 %}
-      {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | first | replace(' Status', '')}} Offline!
+    {% elif offlineDevices | length == 1 %}
+      {{ offlineDevices | map(attribute='name') | first | replace(' Status', '') }} Offline!
     {% else %}
       Devices Offline!
     {% endif %}
   entity_id: binary_sensor.device_offline
   state: "on"
   message: >
-    {% if expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | count == 1 %}
-      The {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | first | replace(' Status', '')}} is offline
+    {% set offlineDevices =  expand(states.binary_sensor)
+      | selectattr('attributes.device_class', 'eq', 'connectivity')
+      | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_g35')
+      | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_suburban')
+      | selectattr('state', 'eq', 'off')
+      | list
+    %}
+    {% if offlineDevices | length == 1 %}
+      The {{ offlineDevices | map(attribute='name') | first | replace(' Status', '')}} is offline
     {% else %}
-      The following devices are offline: {{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | map(attribute='name') | list | join(', ') | replace(' Status', '')}}
+      The following devices are offline: {{ offlineDevices | map(attribute='name') | list | join(', ') | replace(' Status', '')}}
     {% endif %}
   done_message: "All devices are back Online!"
   skip_first: true
@@ -83,6 +102,8 @@ device_offline:
     - 60
     - 240
   data:
-    url: https://ha.nuttytree.dynu.net/lovelace/system_view
+    clickAction: /lovelace-system-devices/system-devices
+    group: Alerts
+    tag: device_offline
   notifiers:
-    html5_chris_pixel_3
+    mobile_app_pixel_3

@@ -72,6 +72,8 @@ views:
                     {{ state_attr('this.entity_id', 'friendly_name') | replace(' Status', '') }}
           exclude:
             - state: 'on'
+            - entity_id: binary_sensor.chris_phone_connected_to_g35
+            - entity_id: binary_sensor.chris_phone_connected_to_suburban
       - title: Devices
         type: custom:auto-entities
         card:

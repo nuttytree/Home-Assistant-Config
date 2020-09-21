@@ -31,7 +31,14 @@
             entities:
               - entity: device_tracker.smartstart_90947
                 name: MKX
-              - entity: person.melissa
+              - entity: sensor.melissa_status
+                name: Status
+          - entity: person.mayson
+            name: Mayson
+            type: custom:multiple-entity-row
+            show_state: false
+            entities:
+              - entity: sensor.mayson_status
                 name: Status
           - entity: sensor.master_bed_status
             name: Master Bed

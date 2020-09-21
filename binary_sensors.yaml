@@ -3,14 +3,8 @@
     presence_all:
       friendly_name: "Presence"
       device_class: presence
-      entity_id: person.chris, person.melissa
       value_template: "{{ expand(['person.chris', 'person.melissa']) | selectattr('state', 'eq', 'home') | list | count > 0 }}"
     
-    upstairs_hall_motion:
-      friendly_name: "Upstairs Hall Motion"
-      device_class: motion
-      value_template: "{{ is_state('sensor.upstairs_hall_motion', '8') }}"
-
     master_bath_motion:
       friendly_name: "Master Bath Motion"
       device_class: motion
@@ -23,52 +17,66 @@
 
     mayson_in_bed:
       friendly_name: "Mayson is in Bed"
-      entity_id: sensor.time, switch.maysons_fan, binary_sensor.mayson_in_bed
       icon_template: "{% if is_state('binary_sensor.mayson_in_bed', 'off') %}mdi:bed-empty{% else %}mdi:bed{% endif %}"
-      value_template: "{{ (now().hour >= 20 or now().hour < 7) and is_state('switch.maysons_fan', 'on') }}"
+      value_template: >-
+        {% set hour = strptime(states('sensor.time'), '%H:%M').hour %}
+        {{ is_state('switch.maysons_fan', 'on') and (hour >= 20 or hour < 7) }}
 
     master_bed_all:
       friendly_name: "Master all in Bed"
-      entity_id: sensor.time, sensor.master_count, sensor.master_bed_count, binary_sensor.master_bed_all
       icon_template: "{% if is_state('binary_sensor.master_bed_all', 'off') %}mdi:bed-empty{% else %}mdi:bed{% endif %}"
-      value_template: "{{ (now().hour >= 20 or now().hour < 7) and states('sensor.master_count')|int > 0 and states('sensor.master_count') <= states('sensor.master_bed_count') }}"
-
-    upstairs_nest_protect:
-      friendly_name: "Upstairs Nest Protect"
-      entity_id: sensor.upstairs_nest_protect_color_status
-      icon_template: "{{ 'mdi:smoke-detector' }}"
-      value_template: "{{ is_state('sensor.upstairs_nest_protect_color_status', 'green') }}"
-
-    basement_nest_protect:
-      friendly_name: "Basment Nest Protect"
-      entity_id: sensor.basement_nest_protect_color_status
-      icon_template: "{{ 'mdi:smoke-detector' }}"
-      value_template: "{{ is_state('sensor.basement_nest_protect_color_status', 'green') }}"
+      value_template: >-
+        {% set hour = strptime(states('sensor.time'), '%H:%M').hour %}
+        {{ states('sensor.master_count') | int > 0 and states('sensor.master_count') <= states('sensor.master_bed_count') and (hour >= 20 or hour < 7) }}
 
     time_to_upgrade:
       friendly_name: "Time to Upgrade Home Assistant"
-      entity_id: sensor.current_version, sensor.latest_version
       icon_template: mdi:package-up
-      value_template: '{{ states("sensor.latest_version").split(".")[1] | int - states("sensor.current_version").split(".")[1] | int > 1 }}'
+      value_template: "{{ states('sensor.latest_version').split('.')[1] | int - states('sensor.current_version').split('.')[1] | int > 1 }}"
+
+    fridge_freezer_temp_alert:
+      friendly_name: Fridge/Freezer Temperature Alert
+      value_template: >-
+        {{
+          is_state('binary_sensor.garage_fridge_temp_alert', 'on')
+          or is_state('binary_sensor.garage_freezer_temp_alert', 'on')
+        }}
 
     garage_fridge_temp_alert:
-      friendly_name: "Garage Fridge Temperature Alert"
-      entity_id: sensor.garage_fridge_rolling_average_temperature
-      value_template: '{{ states("sensor.garage_fridge_rolling_average_temperature") | int < 33 or states("sensor.garage_fridge_rolling_average_temperature") | int > 42}}'
+      friendly_name: Garage Fridge Temperature Alert
+      value_template: >-
+        {{
+          not is_state('sensor.garage_fridge_temp', 'unavailable')
+          and
+          (
+            states("sensor.garage_fridge_temp") | int < 34 
+            or
+            states("sensor.garage_fridge_temp") | int > 45
+          )
+        }}
 
     garage_freezer_temp_alert:
-      friendly_name: "Garage Freezer Temperature Alert"
-      entity_id: sensor.garage_freezer_temp
-      value_template: '{{ states("sensor.garage_freezer_temp") | int > 32}}'
+      friendly_name: Garage Freezer Temperature Alert
+      value_template: >-
+        {{
+          not is_state('sensor.garage_freezer_temp', 'unavailable')
+          and
+          states("sensor.garage_freezer_temp") | int > 30
+        }}
 
     storage_alert:
       friendly_name: Storage Space is Low
-      entity_id: sensor.disk_use_percent
-      value_template: '{{ states("sensor.disk_use_percent") | int > 80}}'
+      value_template: "{{ states('sensor.disk_use_percent') | int > 80}}"
     
     device_offline:
       friendly_name: One or More Devices are Offline
-      value_template: "{{ expand(states.binary_sensor) | selectattr('attributes.device_class', 'eq', 'connectivity') | selectattr('state', 'eq', 'off') | list | length > 0 }}"
+      value_template: >-
+        {{ expand(states.binary_sensor) 
+        | selectattr('attributes.device_class', 'eq', 'connectivity')
+        | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_g35')
+        | rejectattr('entity_id', 'eq', 'binary_sensor.chris_phone_connected_to_suburban')
+        | selectattr('state', 'eq', 'off')
+        | list | length > 0 }}
 
     robo_vac_status:
       friendly_name: Robo-Vac Status
@@ -81,3 +89,16 @@
       friendly_name: "Time to Vacuum the Main Floor"
       value_template: "{{ (as_timestamp(strptime(states('sensor.date_time'), '%Y-%m-%d, %H:%M')) - as_timestamp(state_attr('automation.vacuum_the_main_floor_at_night', 'last_triggered'))) / 60 /60 > 36 }}"
 
+    chris_phone_connected_to_g35:
+      friendly_name: "Chris' Phone is Connected to G35"
+      device_class: connectivity
+      icon_template: mdi:car-connected
+      entity_id: sensor.pixel_3_bluetooth_connection
+      value_template: "{{ '68:9A:87:9A:44:C9' in state_attr('sensor.pixel_3_bluetooth_connection', 'connected_paired_devices') }}"
+
+    chris_phone_connected_to_suburban:
+      friendly_name: "Chris' Phone is Connected to Suburban"
+      device_class: connectivity
+      icon_template: mdi:car-connected
+      entity_id: sensor.pixel_3_bluetooth_connection
+      value_template: "{{ '94:44:44:22:64:26' in state_attr('sensor.pixel_3_bluetooth_connection', 'connected_paired_devices') }}"

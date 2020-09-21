@@ -10,7 +10,7 @@ homeassistant:
    - type: homeassistant
   packages: !include_dir_named packages
 
-image_processing: !include image_processing.yaml
+# image_processing: !include image_processing.yaml
 
 alert: !include alerts.yaml
 
@@ -108,12 +108,6 @@ sensor: !include sensors.yaml
 smartstart:
   username: !secret smartstart_username
   password: !secret smartstart_password
-
-splunk:
-  host: !secret splunk_host
-  token: !secret splunk_token
-  ssl: "true"
-  verify_ssl: "false"
 
 stream:
 

@@ -148,6 +148,7 @@ views:
             - entity_id: switch.pool_cleaner
             - entity_id: switch.coffee_maker_bold_setting
             - entity_id: switch.neato_schedule
+            - entity_id: switch.pi_hole
   - path: home
     title: Home
     icon: 'mdi:home'
@@ -225,6 +226,7 @@ views:
                 - entity_id: switch.pool_cleaner
                 - entity_id: switch.coffee_maker_bold_setting
                 - entity_id: switch.neato_schedule
+                - entity_id: switch.pi_hole
   - path: lights
     title: Lights
     icon: 'mdi:lightbulb'
@@ -253,16 +255,16 @@ views:
             type: custom:slider-entity-row
             entity: light.dining_room_light
             toggle: true
+          - name: Living Room
+            type: custom:slider-entity-row
+            entity: light.living_room_lights
+            toggle: true
       - title: Upstairs
         type: entities
         entities:
           - name: Master Bath
             type: custom:slider-entity-row
-            entity: light.master_bath
-            toggle: true
-          - name: Master Toilet
-            type: custom:slider-entity-row
-            entity: light.master_toilet
+            entity: light.master_bathroom_lights
             toggle: true
           - name: Mayson's Room
             type: custom:slider-entity-row
@@ -412,7 +414,7 @@ views:
         show_header_toggle: false
         state_color: true
         entities:
-          - switch.master_bathroom_fan
+          - fan.master_bathroom_fan
           - switch.master_bath_outlet
           - switch.upstairs_bathroom_fan
           - fan.basement_bathroom_fan

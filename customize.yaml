@@ -251,3 +251,6 @@ switch.smartthings_patio_lights_outlet:
 switch.pool_pump:
   nutty_leave_on_gone: 'true'
   nutty_leave_on_night: 'true'
+switch.pi_hole:
+  nutty_leave_on_gone: 'true'
+  nutty_leave_on_night: 'true'
