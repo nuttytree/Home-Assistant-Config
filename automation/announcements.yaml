@@ -1,31 +1,3 @@
-- id: washer_done
-  alias: Washer is Done Announcement
-  initial_state: 'off'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.washing_machine
-    to: 'off'
-  action:
-  - service: script.audio_notify
-    data:
-      mplayer: "all_inside"
-      message: "The washing machine is done running and ready to be unloaded!"
-
-
-- id: dryer_done
-  alias: Dryer is Done Announcement
-  initial_state: 'off'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.dryer
-    to: 'off'
-  action:
-  - service: script.audio_notify
-    data:
-      mplayer: "all_inside"
-      message: "The dryer is done running and ready to be unloaded!"
-
-
 - id: main_floor_vacuum_error
   alias: Main Floor Vacuum Error
   trigger:
@@ -43,7 +15,7 @@
     entity_id: input_boolean.day_night
     state: 'on'
   action:
-  - service: notify.alexa_media_everywhere
+  - service: notify.alexa_media_inside
     data_template:
       message: >
         {% if is_state_attr('vacuum.neato', 'status', 'Brush stuck') %} 
@@ -59,14 +31,9 @@
   trigger:
   - at: '07:30'
     platform: time
-  - at: '12:30'
-    platform: time
-  - at: '17:30'
-    platform: time
-  condition: []
   action:
   - service: notify.alexa_media_inside
     data_template:
-      message: "Just a friendly reminder, it is time for Mayson to take his {% if states('sensor.time') < '08:00' %}medication and {% endif %}fiber."
+      message: "Just a friendly reminder, it is time for Mayson to take his medication."
       data:
         type: "announce"

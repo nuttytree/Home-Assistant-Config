@@ -27,6 +27,11 @@
     - service: homeassistant.turn_on
       entity_id:
         - light.patio_lights
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.pool_mode
+          state: 'Off'
     - service: light.turn_on
       data:
         entity_id: light.pool_lights
@@ -85,7 +90,4 @@
         - light.back
         - light.deck
         - light.gazebo
-    - service: light.turn_on
-      entity_id:
-        - light.pool_lights
 

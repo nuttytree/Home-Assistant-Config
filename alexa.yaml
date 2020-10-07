@@ -1,7 +1,6 @@
 smart_home:
   filter:
     include_domains:
-    - switch
     - light
     - climate
     include_entities:
@@ -10,40 +9,15 @@ smart_home:
     - script.script_start_chris_car
     - script.shutdown_basement_tv
     exclude_entities:
-    - switch.basement_echo_do_not_disturb_switch
-    - switch.basement_echo_repeat_switch
-    - switch.basement_echo_shuffle_switch
-    - switch.basement_stair_lights_bottom
-    - switch.basement_stair_lights_top
-    - switch.bedroom_echo_do_not_disturb_switch
-    - switch.bedroom_echo_repeat_switch
-    - switch.bedroom_echo_shuffle_switch
-    - switch.family_room_echo_do_not_disturb_switch
-    - switch.family_room_echo_repeat_switch
-    - switch.family_room_echo_shuffle_switch
-    - switch.living_room_echo_do_not_disturb_switch
-    - switch.living_room_echo_repeat_switch
-    - switch.living_room_echo_shuffle_switch
-    - switch.master_bath_outlet_switch_2
-    - switch.office_echo_do_not_disturb_switch
-    - switch.office_echo_repeat_switch
-    - switch.office_echo_shuffle_switch
-    - switch.pool_drain_valve
-    - switch.pool_fill_valve
-    - switch.restart_coffee_maker
-    - switch.restart_garage_fridge
-    - switch.restart_master_bed
-    - switch.restart_patio_lights
-    - switch.restart_pool_lights
-    - switch.smartstart_90947
-    - switch.smartstart_706837
-    - switch.smartstart_1695751
-    - switch.smartthings_patio_lights_outlet
-    - switch.upstairs_bathroom_fan_2
-    - light.dimmer_in_family_room
-    - light.ge_26933_smart_motion_dimmer_level_2
-    - light.maysons_switch
+    - light.always_off
+    - light.always_on
+    - light.basement_stair_lights_2
+    - light.browser_1e9f0398_65167b95
+    - light.browser_3039c3cf_30d38a69
+    - light.browser_f5bf6e71_de5fd3ec
+    - light.master_bathroom_lights_2
     - light.maysons_outlet
+    - light.maysons_switch
   entity_config:
     switch.front_lights:
       display_categories: LIGHT
